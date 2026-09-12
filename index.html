@@ -11,13 +11,32 @@
 </head>
 <body>
 
-    <!-- ==================== [ شريط العلوي - Header ] ==================== -->
-    <header class="navbar">
-        <!-- شعار منصة TalkSpace -->
-        <div class="logo">
-            <i class="fa-solid fa-comments"></i>
-            <span>TalkSpace</span>
+   <!-- ==================== [ الشريط العلوي الحديث - Navbar ] ==================== -->
+<header class="navbar">
+    <!-- شعار المنصة -->
+    <div class="logo">
+        <i class="fa-solid fa-comments"></i>
+        <span>TalkSpace</span>
+    </div>
+
+    <!-- أزرار التنقل السريع بين الأقسام الثلاثة -->
+    <nav class="nav-links">
+        <a href="#priority-section" class="nav-btn"><i class="fa-solid fa-list-check"></i> الأولويات</a>
+        <a href="#canvas-section" class="nav-btn"><i class="fa-solid fa-pen-ruler"></i> الرسم</a>
+        <a href="#publish-section" class="nav-btn"><i class="fa-solid fa-paper-plane"></i> النشر</a>
+    </nav>
+
+    <!-- ملف المستخدم والحالة -->
+    <div class="user-profile-summary">
+        <div class="user-info">
+            <span class="username">مستخدم TalkSpace</span>
+            <span class="user-status"><i class="fa-solid fa-circle"></i> متصل</span>
         </div>
+        <div class="avatar-wrapper">
+            <img id="avatar-img" src="https://via.placeholder.com/42" alt="صورة الحساب">
+        </div>
+    </div>
+</header>
         
         <!-- معلومات حساب المستخدم -->
         <div class="user-profile-summary">
