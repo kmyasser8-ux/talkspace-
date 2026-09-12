@@ -245,3 +245,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadSavedTheme();
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const bgUrlInput = document.getElementById('bg-url-input');
+    const bgFileInput = document.getElementById('bg-file-input');
+    const removeBgBtn = document.getElementById('remove-bg-btn');
+
+    // 1. تطبيق خلفية من رابط أونلاين
+    bgUrlInput?.addEventListener('change', (e) => {
+        const url = e.target.value.trim();
+        if (url) {
+            applyBackgroundImage(`url("${url}")`);
+            localStorage.setItem('talkspace_custom_bg_img', `url("${url}")`);
+        }
+    });
+
+    // 2. تطبيق خلفية مرفوعة من جهاز الحاسوب (Base64)
+    bgFileInput?.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imgData = `url("${event.target.result}")`;
+                applyBackgroundImage(imgData);
+                try {
+                    localStorage.setItem('talkspace_custom_bg_img', imgData);
+                } catch (err) {
+                    alert('حجم الصورة كبير جداً للحفظ الدائم!');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // 3. إزالة صورة الخلفية
+    removeBgBtn?.addEventListener('click', () => {
+        document.body.style.backgroundImage = 'none';
+        localStorage.removeItem('talkspace_custom_bg_img');
+        if (bgUrlInput) bgUrlInput.value = '';
+    });
+
+    // دالة مساعدة للتطبيق
+    function applyBackgroundImage(bgValue) {
+        document.body.style.backgroundImage = bgValue;
+    }
+
+    // 4. استرجاع الخلفية المحفوظة فور فتح الصفحة
+    const savedBgImg = localStorage.getItem('talkspace_custom_bg_img');
+    if (savedBgImg) {
+        applyBackgroundImage(savedBgImg);
+    }
+});
