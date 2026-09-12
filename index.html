@@ -51,9 +51,24 @@
 <aside id="customizer-panel" class="customizer-panel hidden">
     <div class="customizer-header">
         <h3><i class="fa-solid fa-paint-roller"></i> لوحة التحكم الذاتي</h3>
-        <button id="close-customizer-btn"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-
+    <!-- قسم مغير الخلفيات الديناميكية -->
+<div class="control-group">
+    <label><i class="fa-solid fa-image"></i> خلفية الواجهة الديناميكية:</label>
+    
+    <!-- خيار 1: إضافة رابط صورة أونلاين -->
+    <input type="url" id="bg-url-input" placeholder="ضع رابط صورة (https://...)" class="custom-input">
+    
+    <!-- خيار 2: رفع صورة من الجهاز -->
+    <label for="bg-file-input" class="file-upload-btn">
+        <i class="fa-solid fa-upload"></i> رفع صورة من الحاسوب
+    </label>
+    <input type="file" id="bg-file-input" accept="image/*" style="display: none;">
+    
+    <!-- زر إزالة الخلفية وإرجاع اللون -->
+    <button id="remove-bg-btn" class="sub-btn">إزالة الخلفية</button>
+</div>    <button id="close-customizer-btn"><i class="fa-solid fa-xmark"></i></button>   
+      </div>
+ 
     <div class="customizer-body">
         <!-- 1. التحكم بالألوان -->
         <div class="control-group">
