@@ -1,412 +1,363 @@
-html {
-    scroll-behavior: smooth;
-}    /* ==========================================
-   1. ألوان وحجم الشاشة الكاملة
-   ========================================== */
+/* --- المتغيرات والتنسيق الأساسي --- */
 :root {
-    --bg-main: #0a0e17;
+    --primary-color: #00f2fe;
+    --bg-color: #0a0e17;
     --text-color: #ffffff;
-    
-    /* ألوان الأقسام المتميزة */
-    --color-section-1: rgba(0, 242, 254, 0.12);  /* أزرق نيون قسم الأولويات */
-    --color-section-2: rgba(157, 78, 221, 0.12); /* بنفسجي نيون لوحة الرسم */
-    --color-section-3: rgba(255, 0, 110, 0.12);  /* وردي نيون قسم النشر */
-    
-    --border-section-1: #00f2fe;
-    --border-section-2: #9d4ede;
-    --border-section-3: #ff006e;
+    --glass-bg: rgba(13, 17, 23, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-blur: 15px;
+    --card-hover: rgba(0, 242, 254, 0.3);
+}
+
+/* الوضع الفاتح (Light Mode) */
+[data-theme="light"] {
+    --bg-color: #eef2f5;
+    --text-color: #1a1a1a;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --card-hover: rgba(0, 100, 255, 0.2);
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: var(--bg-main);
+    background-color: var(--bg-color);
     color: var(--text-color);
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    transition: background 0.3s ease, color 0.3s ease;
     overflow-x: hidden;
 }
 
-/* ==========================================
-   تنسيق شريط الأيقونات الاحترافي
-   ========================================== */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    z-index: 1000;
+/* --- الترويسة الشفافة (Header) --- */
+.main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px;
-    background: rgba(10, 14, 23, 0.9);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 30px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-/* الشعار */
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #00f2fe;
+.logo-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-/* شريط أزرار الأيقونات */
-.nav-icons {
+.brand-logo {
+    width: 42px;
+    height: 42px;
     display: flex;
-    gap: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 8px 20px;
-    border-radius: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-logo svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px var(--primary-color));
+}
+
+.main-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.header-nav {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    transition: 0.2s;
+    position: relative;
+}
+
+.nav-link.active, .nav-link:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .icon-btn {
-    position: relative;
-    color: #8b949e;
-    font-size: 1.3rem;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    justify-content: center;
+    transition: 0.2s;
 }
 
 .icon-btn:hover {
-    color: #00f2fe;
-    background: rgba(0, 242, 254, 0.15);
-    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    background: var(--primary-color);
+    color: #000;
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
-/* ظهور اسم الأيقونة عند حوم الماوس فوقها (Tooltip) */
-.icon-btn::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: -35px;
-    background: #161b22;
-    color: #fff;
-    font-size: 0.75rem;
-    padding: 4px 10px;
-    border-radius: 6px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.icon-btn:hover::after {
-    opacity: 1;
-}
-
-/* أيقونة الحساب الشخصي */
 .user-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-}
-
-.status-indicator {
-    width: 10px;
-    height: 10px;
-    background-color: #2ed573;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    box-shadow: 0 0 8px #2ed573;
-}
-
-.avatar-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid #00f2fe;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #00f2fe;
-    font-size: 1.1rem;
-}
-/* ==========================================
-   3. نظام الأقسام ملء الشاشة (Full-Screen Layout)
-   ========================================== */
-.dashboard-container {
-    margin-top: 70px;
-    display: flex;
-    flex-direction: column;
-}
-
-.full-screen-section {
-    min-height: calc(100vh - 70px);
-    width: 100%;
-    padding: 60px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* الألوان الخاصة بكل قسم */
-.priority-section {
-    background: radial-gradient(circle at top right, var(--color-section-1), transparent 70%);
-    border-left: 6px solid var(--border-section-1);
-}
-
-.canvas-section {
-    background: radial-gradient(circle at top right, var(--color-section-2), transparent 70%);
-    border-left: 6px solid var(--border-section-2);
-}
-
-.publish-section {
-    background: radial-gradient(circle at top right, var(--color-section-3), transparent 70%);
-    border-left: 6px solid var(--border-section-3);
-}
-
-/* ==========================================
-   4. عناوين وأدوات واضحة
-   ========================================== */
-h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.priority-section h2 { color: var(--border-section-1); }
-.canvas-section h2 { color: var(--border-section-2); }
-.publish-section h2 { color: var(--border-section-3); }
-
-input[type="text"], select, textarea {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 16px 20px;
-    font-size: 1.1rem;
-    border-radius: 12px;
-    outline: none;
-    margin-bottom: 15px;
-}
-
-button {
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 14px 28px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
-}
-
-/* تخصيص قسم الرسم بمتسعة أكبر */
-.canvas-wrapper {
-    background: #121824;
-    border-radius: 16px;
-    overflow: hidden;
     display: flex;
+    align-items: center;
     justify-content: center;
-    border: 1px solid var(--border-section-2);
+    border: 1px solid var(--glass-border);
 }
 
-#paint-canvas {
+/* --- شبكة البطاقات التفاعلية (Showcase Cards Grid) --- */
+.hero-container {
+    padding: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+}
+
+.cards-grid {
+    display: flex;
+    gap: 18px;
     width: 100%;
-    height: 500px;
-    cursor: crosshair;
+    height: 80vh;
 }
 
-.canvas-tools {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin-bottom: 20px;
+.showcase-card {
+    flex: 1;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s ease;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* قائمة الأولويات */
-.input-group {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
+.showcase-card:hover {
+    flex: 2.5;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 25px var(--card-hover);
 }
 
-.task-item {
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.1) 60%);
+    padding: 25px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 25px;
-    font-size: 1.2rem;
-    background: rgba(255, 255, 255, 0.05);
-    margin-bottom: 12px;
-    border-radius: 12px;
-    border-right: 6px solid var(--border-section-1);
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #fff;
 }
-/* لوحة التخصيص العائمة */
+
+.card-tag {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.card-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
+
+/* --- لوحة التخصيص الذكية (Customizer Panel) --- */
 .customizer-panel {
-    position: fixed;
-    top: 80px;
-    left: 20px;
-    width: 300px;
-    background: rgba(13, 17, 23, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-section-1, #00f2fe);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    transition: all 0.3s ease-in-out;
+    position: fixed !important;
+    top: 70px !important;
+    left: 20px !important;
+    width: 330px !important;
+    max-width: 90vw !important;
+    max-height: calc(100vh - 90px) !important;
+    overflow-y: auto !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    border: 1px solid var(--primary-color) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7) !important;
+    z-index: 999999 !important;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s !important;
 }
 
 .customizer-panel.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-20px);
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-12px) !important;
 }
 
 .customizer-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--glass-border);
     padding-bottom: 10px;
     margin-bottom: 15px;
 }
 
-.control-group {
-    margin-bottom: 15px;
+.customizer-header h3 {
+    font-size: 0.95rem;
+    color: var(--primary-color);
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.close-btn:hover { color: #ff4757; }
+
+.customizer-body { display: flex; flex-direction: column; gap: 14px; }
+
+.control-group { display: flex; flex-direction: column; gap: 6px; }
+.control-group.row-between { flex-direction: row; justify-content: space-between; align-items: center; }
+
+.control-group label { font-size: 0.8rem; color: var(--text-color); opacity: 0.9; }
+
+.theme-toggle-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
-.control-group label {
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-.control-group input[type="color"] {
+.custom-input {
     width: 100%;
-    height: 40px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.input-with-btn { display: flex; gap: 6px; }
+
+.action-btn {
+    padding: 0 12px;
+    background: var(--primary-color);
+    border: none;
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.file-upload-btn {
+    text-align: center;
+    padding: 8px;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px dashed var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.reset-sub-btn {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: #aaa;
+    padding: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.color-picker-input {
+    width: 100%;
+    height: 36px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     background: transparent;
 }
 
+.range-input { width: 100%; accent-color: var(--primary-color); }
+
 .reset-btn {
     width: 100%;
     padding: 10px;
-    background: rgba(255, 71, 87, 0.2);
+    background: rgba(255, 71, 87, 0.15);
     border: 1px solid #ff4757;
     color: #ff4757;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
-}
-
-.reset-btn:hover {
-    background: #ff4757;
-    color: #fff;
-}
-/* دعم خلفية الصورة الديناميكية للجسم */
-body {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    transition: background 0.4s ease-in-out;
-}
-
-/* زر رفع الملف والمدخلات */
-.custom-input {
-    width: 100%;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 8px;
-    color: #fff;
     font-size: 0.85rem;
+    margin-top: 10px;
 }
 
-.file-upload-btn {
-    display: block;
-    text-align: center;
-    padding: 8px;
-    background: rgba(0, 242, 254, 0.1);
-    border: 1px dashed var(--border-section-1, #00f2fe);
-    color: var(--border-section-1, #00f2fe);
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: 0.2s;
-}
+.reset-btn:hover { background: #ff4757; color: #fff; }
 
-.file-upload-btn:hover {
-    background: rgba(0, 242, 254, 0.2);
-}
-
-.sub-btn {
-    width: 100%;
-    padding: 6px;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ccc;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.8rem;
-}
-/* لوحة التخصيص والتحكم الذاتي المحدثة */ /* إصلاح أبعاد وموقع لوحة التخصيص */
-.customizer-panel {
-    position: fixed !important;
-    top: 80px !important;
-    left: 20px !important;
-    width: 320px !important;
-    max-width: 90vw !important;
-    max-height: calc(100vh - 120px) !important;
-    overflow-y: auto !important;
-    background: rgba(13, 17, 23, 0.95) !important;
-    backdrop-filter: blur(15px) !important;
-    border: 1px solid var(--border-section-1, #00f2fe) !important;
-    border-radius: 16px !important;
-    padding: 20px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
-    z-index: 999999 !important;
-    box-sizing: border-box !important;
-    transition: opacity 0.3s ease, transform 0.3s ease !important;
-}
-
-/* إخفاء اللوحة جانباً */
-.customizer-panel.hidden {
-    display: none !important;
-}
-
-/* ترتيب المجموعات الداخلية رأسياً */
-.customizer-body {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 15px !important;
-}
-
-.control-group {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-    width: 100% !important;
+/* تجاوب الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .cards-grid { flex-direction: column; height: auto; }
+    .showcase-card { height: 200px; }
+    .showcase-card:hover { flex: 1; height: 280px; }
+    .header-nav { display: none; }
 }
