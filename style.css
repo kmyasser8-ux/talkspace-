@@ -325,3 +325,50 @@ button:hover {
     background: #ff4757;
     color: #fff;
 }
+/* دعم خلفية الصورة الديناميكية للجسم */
+body {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    transition: background 0.4s ease-in-out;
+}
+
+/* زر رفع الملف والمدخلات */
+.custom-input {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+.file-upload-btn {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px dashed var(--border-section-1, #00f2fe);
+    color: var(--border-section-1, #00f2fe);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+
+.file-upload-btn:hover {
+    background: rgba(0, 242, 254, 0.2);
+}
+
+.sub-btn {
+    width: 100%;
+    padding: 6px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
