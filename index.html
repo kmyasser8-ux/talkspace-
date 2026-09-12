@@ -4,21 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TalkSpace - المنصة التفاعلية</title>
-    <!-- استدعاء خطوط Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- ملف التنسيق المباشر -->
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
-    <!-- الترويسة العليا -->
+    <!-- الترويسة الرئيسية -->
     <header class="main-header">
         <div class="logo-container">
-            <!-- شعار الـ SVG المخصص في HEXAGON + CYBER EYE -->
             <div class="brand-logo">
                 <svg fill="#000000" viewBox="-3.2 -3.2 38.40 38.40" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.32">
                     <g id="SVGRepo_bgCarrier">
@@ -33,132 +29,149 @@
         </div>
 
         <nav class="header-nav">
-            <a href="#" class="nav-link active">الرئيسية</a>
-            <a href="#" class="nav-link">الوجهات</a>
-            <a href="#" class="nav-link">العروض</a>
+            <button class="nav-link active" data-target="home-tab">الرئيسية</button>
+            <button class="nav-link" data-target="analytics-tab">التحليلات الذكية</button>
+            <button class="nav-link" data-target="tools-tab">أدوات التطوير</button>
         </nav>
 
         <div class="header-actions">
             <button id="toggle-customizer-btn" class="icon-btn" onclick="toggleCustomizer()" title="تخصيص الواجهة">
                 <i class="fa-solid fa-sliders"></i>
             </button>
-            <div class="user-profile">
-                <i class="fa-solid fa-user"></i>
-            </div>
+            <button class="icon-btn" id="user-alert-btn" title="الإشعارات">
+                <i class="fa-solid fa-bell"></i>
+            </button>
         </div>
     </header>
 
-    <!-- لوحة التخصيص الذكي (Customizer Panel) -->
+    <!-- لوحة التخصيص والتحكم الذاتي -->
     <aside id="customizer-panel" class="customizer-panel hidden">
         <div class="customizer-header">
-            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> تخصيص استوديو TalkSpace</h3>
-            <button id="close-customizer-btn" class="close-btn" onclick="toggleCustomizer()">
+            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> استوديو التخصيص</h3>
+            <button class="close-btn" onclick="toggleCustomizer()">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
         <div class="customizer-body">
-            <!-- 1. زر التبديل بين الوضع الليلي والنهاري -->
             <div class="control-group row-between">
-                <label><i class="fa-solid fa-moon"></i> الوضع الليلي / النهاري</label>
+                <label><i class="fa-solid fa-moon"></i> الوضع الليلي/النهاري:</label>
                 <button id="theme-toggle-btn" class="theme-toggle-pill">
                     <span id="theme-mode-label">داكن</span>
                     <i id="theme-mode-icon" class="fa-solid fa-moon"></i>
                 </button>
             </div>
 
-            <!-- 2. مغير الخلفية الديناميكية -->
             <div class="control-group">
-                <label><i class="fa-solid fa-image"></i> صورة خلفية الواجهة:</label>
-                <div class="input-with-btn">
-                    <input type="url" id="bg-url-input" placeholder="رابط صورة مباشر..." class="custom-input">
-                    <button id="apply-url-btn" class="action-btn">تطبيق</button>
-                </div>
-                <label for="bg-file-input" class="file-upload-btn">
-                    <i class="fa-solid fa-upload"></i> رفع صورة من جهازك
-                </label>
-                <input type="file" id="bg-file-input" accept="image/*" style="display: none;">
-                <button id="remove-bg-btn" class="reset-sub-btn">إزالة الخلفية المخصصة</button>
-            </div>
-
-            <!-- 3. ألوان النيون والتوهج -->
-            <div class="control-group">
-                <label><i class="fa-solid fa-droplet"></i> لون التوهج (Neon Color):</label>
+                <label><i class="fa-solid fa-droplet"></i> لون التوهج (Neon):</label>
                 <input type="color" id="primary-color-picker" value="#00f2fe" class="color-picker-input">
             </div>
 
-            <!-- 4. تأثير الزجاج (Blur & Opacity) -->
             <div class="control-group">
-                <label><i class="fa-solid fa-eye-dropper"></i> قوة ضبابية الزجاج (Blur):</label>
+                <label><i class="fa-solid fa-eye-dropper"></i> ضبابية الزجاج (Blur):</label>
                 <input type="range" id="blur-range" min="0" max="30" value="15" class="range-input">
             </div>
 
-            <!-- 5. الخطوط وحجمها -->
             <div class="control-group">
-                <label><i class="fa-solid fa-font"></i> خط الواجهة:</label>
+                <label><i class="fa-solid fa-font"></i> نوع الخط العربي:</label>
                 <select id="font-family-select" class="custom-input">
+                    <option value="'Cairo', sans-serif">خط القاهرة (Cairo)</option>
+                    <option value="'Tajawal', sans-serif">خط تجوال (Tajawal)</option>
                     <option value="system-ui, sans-serif">الافتراضي (System)</option>
-                    <option value="'Cairo', sans-serif">القاهرة (Cairo)</option>
-                    <option value="'Tajawal', sans-serif">تجوال (Tajawal)</option>
-                    <option value="'Amiri', serif">أميري (Amiri)</option>
                 </select>
             </div>
 
-            <div class="control-group">
-                <label><i class="fa-solid fa-text-height"></i> حجم الخط:</label>
-                <input type="range" id="font-size-range" min="14" max="20" value="16" class="range-input">
-            </div>
-
-            <!-- 6. إعادة ضبط الإعدادات -->
             <button id="reset-theme-btn" class="reset-btn">
                 <i class="fa-solid fa-rotate-left"></i> إرجاع الضبط الافتراضي
             </button>
         </div>
     </aside>
 
-    <!-- المحتوى الرئيسي: معرض البطاقات الكبيرة المتعددة (CodePen-style Interactive Cards Grid) -->
-    <main class="hero-container">
-        <div class="cards-grid">
-            
-            <!-- بطاقة 1: جبال سويسرا -->
-            <div class="showcase-card" style="background-image: url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=1000&auto=format&fit=crop');">
-                <div class="card-overlay">
-                    <span class="card-tag">GLOBE EXPRESS</span>
-                    <h3 class="card-title">Switzerland Alps</h3>
-                    <p class="card-subtitle">SAINT ANTONIEN</p>
+    <!-- واجهة المنصة التفاعلية الحقيقية -->
+    <main class="app-viewport">
+
+        <!-- القسم الأول: بطاقات الهوية البصرية والمميزات التفاعلية -->
+        <section id="home-tab" class="tab-content active">
+            <div class="cards-interactive-container">
+
+                <div class="platform-card active-feature" id="card-1">
+                    <div class="card-glow-bg"></div>
+                    <div class="card-header-icon">
+                        <i class="fa-solid fa-eye-low-vision"></i>
+                    </div>
+                    <span class="card-badge">CYBER EYE</span>
+                    <h3 class="card-title">المراقبة والتحليل الذكي</h3>
+                    <p class="card-desc">واجهة بصرية متطورة تعتمد نظام المسدس السداسي لمعالجة البيانات البرمجية في الوقت الفعلي.</p>
+                    <button class="action-card-btn" onclick="triggerCardAction('تم تفعيل وحدة التحليل الذكي!')">تفعيل الوحدة</button>
+                </div>
+
+                <div class="platform-card" id="card-2">
+                    <div class="card-glow-bg"></div>
+                    <div class="card-header-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="card-badge">SECURITY CORE</span>
+                    <h3 class="card-title">التشفير السداسي المحمي</h3>
+                    <p class="card-desc">حماية عالية الكفاءة مع بروتوكولات العزل التلقائي لحماية قاعدة بيانات المنصة ومكوناتها.</p>
+                    <button class="action-card-btn" onclick="triggerCardAction('تم فحص وتأمين كافة المكونات بنجاح!')">فحص الأمان</button>
+                </div>
+
+                <div class="platform-card" id="card-3">
+                    <div class="card-glow-bg"></div>
+                    <div class="card-header-icon">
+                        <i class="fa-solid fa-cubes-stacked"></i>
+                    </div>
+                    <span class="card-badge">MODULAR ENGINE</span>
+                    <h3 class="card-title">محرك البرمجة النمطية</h3>
+                    <p class="card-desc">أدوات مرنة لبناء وتخصيص عناصر الواجهة وإدارتها بدقة متناهية عبر خيارات الاستوديو.</p>
+                    <button class="action-card-btn" onclick="toggleCustomizer()">فتح الاستوديو</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- القسم الثاني: قسم التحليلات -->
+        <section id="analytics-tab" class="tab-content">
+            <div class="glass-section">
+                <h2><i class="fa-solid fa-chart-line"></i> لوحة التحليلات المتقدمة</h2>
+                <p>مؤشرات الأداء للبيانات والمكونات النشطة داخل TalkSpace:</p>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-num" id="stat-1">99.8%</span>
+                        <span class="stat-label">دقة المعالجة</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num" id="stat-2">12ms</span>
+                        <span class="stat-label">سرعة الاستجابة</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num" id="stat-3">Active</span>
+                        <span class="stat-label">حالة النظام</span>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- بطاقة 2: جبال اليابان -->
-            <div class="showcase-card active-card" style="background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=1000&auto=format&fit=crop');">
-                <div class="card-overlay">
-                    <span class="card-tag">DESTINATIONS</span>
-                    <h3 class="card-title">Japan Alps</h3>
-                    <p class="card-subtitle">NAGANO PREFECTURE</p>
+        <!-- القسم الثالث: أدوات التطوير -->
+        <section id="tools-tab" class="tab-content">
+            <div class="glass-section">
+                <h2><i class="fa-solid fa-code"></i> أدوات تحسين الأكواد</h2>
+                <p>قم باختبار الأوامر والوظائف السريعة للمنصة:</p>
+                <div class="tools-actions">
+                    <button class="tool-btn" onclick="runTool('تصفية الذاكرة العشوائية')"><i class="fa-solid fa-broom"></i> تنظيف الكاش</button>
+                    <button class="tool-btn" onclick="runTool('إعادة مزامنة الملفات')"><i class="fa-solid fa-sync"></i> مزامنة البيانات</button>
                 </div>
             </div>
+        </section>
 
-            <!-- بطاقة 3: الشواطئ والصخور -->
-            <div class="showcase-card" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop');">
-                <div class="card-overlay">
-                    <span class="card-tag">HOLIDAYS</span>
-                    <h3 class="card-title">Ocean Coastal</h3>
-                    <p class="card-subtitle">PACIFIC PARK</p>
-                </div>
-            </div>
-
-            <!-- بطاقة 4: الغابات والتلال -->
-            <div class="showcase-card" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1000&auto=format&fit=crop');">
-                <div class="card-overlay">
-                    <span class="card-tag">DISCOVER</span>
-                    <h3 class="card-title">National Parks</h3>
-                    <p class="card-subtitle">FOREST RESERVES</p>
-                </div>
-            </div>
-
-        </div>
     </main>
 
-    <script src="app.js?v=4.0"></script>
+    <!-- شريط الإشعارات التفاعلي (Notification Toast) -->
+    <div id="toast-notification" class="toast hidden">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">تمت العملية بنجاح!</span>
+    </div>
+
+    <script src="app.js?v=5.0"></script>
 </body>
 </html>
