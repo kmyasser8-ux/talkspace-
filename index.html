@@ -106,7 +106,15 @@
             <label><i class="fa-solid fa-text-height"></i> حجم الخط الرئيسي:</label>
             <input type="range" id="font-size-range" min="14" max="20" value="16">
         </div>
-
+<div class="control-group">
+    <label><i class="fa-solid fa-font"></i> نوع الخط العربي:</label>
+    <select id="font-family-select" class="custom-input">
+        <option value="system-ui, sans-serif">الافتراضي (System)</option>
+        <option value="'Cairo', sans-serif">خط القاهرة (Cairo)</option>
+        <option value="'Tajawal', sans-serif">خط تجوال (Tajawal)</option>
+        <option value="'Amiri', serif">خط أميري (Amiri)</option>
+    </select>
+</div>
         <!-- 4. إعادة التعيين -->
         <button id="reset-theme-btn" class="reset-btn">
             <i class="fa-solid fa-rotate-left"></i> إرجاع الإعدادات الافتراضية
