@@ -29,70 +29,51 @@
     <!-- ==================== [ محتوى اللوحة الرئيسية - Dashboard ] ==================== -->
     <main class="dashboard-container">
         
-        <!-- ===== [ القسم الأول: إدارة وتحديد الأولويات ] ===== -->
-        <section class="card glass-panel priority-section">
-            <h2><i class="fa-solid fa-list-check"></i> ترتيب الأولويات والمهام</h2>
-            
-            <div class="input-group">
-                <!-- خانة إدخال العنوان -->
-                <input type="text" id="task-input" placeholder="عنوان فكرة أو مقال جديد...">
-                
-                <!-- قائمة تحديد درجة الأولوية -->
-                <select id="priority-select">
-                    <option value="high">عالية 🔥</option>
-                    <option value="medium" selected>متوسطة ⚡</option>
-                    <option value="low">منخفضة ☕</option>
-                </select>
-                
-                <!-- زر الإضافة -->
-                <button id="add-task-btn"><i class="fa-solid fa-plus"></i> إضافة</button>
-            </div>
-            
-            <!-- القائمة الديناميكية لعرض الأولويات -->
-            <ul id="task-list" class="task-list"></ul>
-        </section>
+      <main class="dashboard-container">
+    
+    <!-- القسم الأول: شاشة كاملة -->
+    <section class="full-screen-section priority-section">
+        <h2><i class="fa-solid fa-list-check"></i> 1. ترتيب الأولويات والمهام</h2>
+        <div class="input-group">
+            <input type="text" id="task-input" placeholder="عنوان فكرة أو مقال جديد...">
+            <select id="priority-select">
+                <option value="high">عالية 🔥</option>
+                <option value="medium" selected>متوسطة ⚡</option>
+                <option value="low">منخفضة ☕</option>
+            </select>
+            <button id="add-task-btn"><i class="fa-solid fa-plus"></i> إضافة</button>
+        </div>
+        <ul id="task-list" class="task-list"></ul>
+    </section>
 
-        <!-- ===== [ القسم الثاني: لوحة الرسم المدمجة - Canvas ] ===== -->
-        <section class="card glass-panel canvas-section">
-            <h2><i class="fa-solid fa-pen-ruler"></i> مساحة الرسم (TalkSpace Canvas)</h2>
-            
-            <!-- شريط أدوات الرسم -->
-            <div class="canvas-tools">
-                <!-- أداة اختيار لون الفرشاة -->
-                <label for="brush-color">اللون:</label>
-                <input type="color" id="brush-color" value="#00f2fe">
-                
-                <!-- أداة التحكم بحجم الفرشاة -->
-                <label for="brush-size">الحجم:</label>
-                <input type="range" id="brush-size" min="1" max="30" value="4">
-                
-                <!-- أزرار الإجراءات -->
-                <button id="clear-canvas"><i class="fa-solid fa-trash-can"></i> مسح</button>
-                <button id="download-canvas"><i class="fa-solid fa-download"></i> حفظ الرسمة</button>
-            </div>
-            
-            <!-- مساحة الرسم الفعلية -->
-            <div class="canvas-wrapper">
-                <canvas id="paint-canvas" width="600" height="350"></canvas>
-            </div>
-        </section>
+    <!-- القسم الثاني: شاشة كاملة -->
+    <section class="full-screen-section canvas-section">
+        <h2><i class="fa-solid fa-pen-ruler"></i> 2. مساحة الرسم الإبداعية</h2>
+        <div class="canvas-tools">
+            <label>اللون:</label>
+            <input type="color" id="brush-color" value="#00f2fe">
+            <label>الحجم:</label>
+            <input type="range" id="brush-size" min="1" max="30" value="5">
+            <button id="clear-canvas"><i class="fa-solid fa-trash-can"></i> مسح</button>
+            <button id="download-canvas"><i class="fa-solid fa-download"></i> حفظ الرسمة</button>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="paint-canvas" width="1000" height="500"></canvas>
+        </div>
+    </section>
 
-        <!-- ===== [ القسم الثالث: كتابة ونشر المقالات ] ===== -->
-        <section class="card glass-panel publish-section">
-            <h2><i class="fa-solid fa-paper-plane"></i> نشر مقال في TalkSpace</h2>
-            
-            <!-- أدوات كتابة المحتوى -->
-            <input type="text" id="article-title" placeholder="عنوان منشورك...">
-            <textarea id="article-body" rows="5" placeholder="شارِك أفكارك مع مجتمع TalkSpace..."></textarea>
-            
-            <!-- أزرار الحفظ والنشر -->
-            <div class="publish-actions">
-                <button id="save-draft-btn" class="btn-secondary"><i class="fa-solid fa-floppy-disk"></i> حفظ مسودة</button>
-                <button id="publish-github-btn" class="btn-primary"><i class="fa-brands fa-github"></i> نشر عبر GitHub Issues</button>
-            </div>
-        </section>
+    <!-- القسم الثالث: شاشة كاملة -->
+    <section class="full-screen-section publish-section">
+        <h2><i class="fa-solid fa-paper-plane"></i> 3. كتابة ونشر مقال</h2>
+        <input type="text" id="article-title" placeholder="عنوان منشورك...">
+        <textarea id="article-body" rows="8" placeholder="شارِك أفكارك مع مجتمع TalkSpace..."></textarea>
+        <div class="publish-actions">
+            <button id="save-draft-btn"><i class="fa-solid fa-floppy-disk"></i> حفظ مسودة</button>
+            <button id="publish-github-btn" style="background: var(--border-section-3); color:#fff;"><i class="fa-brands fa-github"></i> نشر عبر GitHub Issues</button>
+        </div>
+    </section>
 
-    </main>
+</main>
 
     <!-- ملف البرمجة والتفاعلات -->
     <script src="app.js"></script>
