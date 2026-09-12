@@ -29,43 +29,109 @@ body {
 }
 
 /* ==========================================
-   2. الهيدر العلوي الثابت (Sticky Header)
+   تنسيق الشريط العلوي الاحترافي (Navbar)
    ========================================== */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    height: 75px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background: rgba(10, 14, 23, 0.85);
-    backdrop-filter: blur(10px);
+    padding: 0 50px;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
+/* الشعار */
 .logo {
-    font-size: 1.6rem;
-    font-weight: bold;
+    font-size: 1.7rem;
+    font-weight: 800;
     color: #00f2fe;
     display: flex;
     align-items: center;
     gap: 12px;
+    letter-spacing: 0.5px;
 }
 
+.logo i {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 0 8px #00f2fe);
+}
+
+/* روابط التنقل السريع */
+.nav-links {
+    display: flex;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px 12px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-btn {
+    color: #c9d1d9;
+    text-decoration: none;
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    color: #fff;
+    background: rgba(0, 242, 254, 0.15);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+/* بطاقة المستخدم */
 .user-profile-summary {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
 }
 
-.user-profile-summary img {
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #fff;
+}
+
+.user-status {
+    font-size: 0.75rem;
+    color: #2ed573;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.user-status i {
+    font-size: 0.5rem;
+}
+
+.avatar-wrapper img {
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     border: 2px solid #00f2fe;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
 }
-
 /* ==========================================
    3. نظام الأقسام ملء الشاشة (Full-Screen Layout)
    ========================================== */
