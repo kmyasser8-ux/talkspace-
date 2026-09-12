@@ -165,21 +165,37 @@ document.querySelectorAll('.icon-btn').forEach(button => {
         }
     });
 });
-// --- محرك التحكم والتخصيص الذاتي ---
+// --- كود فتح وإغلاق لوحة التحكم بشكل مضمون ---
 document.addEventListener('DOMContentLoaded', () => {
     const customizerPanel = document.getElementById('customizer-panel');
     const toggleBtn = document.getElementById('toggle-customizer-btn');
     const closeBtn = document.getElementById('close-customizer-btn');
-    
-    const primaryColorPicker = document.getElementById('primary-color-picker');
-    const bgColorPicker = document.getElementById('bg-color-picker');
-    const fontSelect = document.getElementById('font-family-select');
-    const fontSizeRange = document.getElementById('font-size-range');
-    const resetBtn = document.getElementById('reset-theme-btn');
 
-    // فتح وإغلاق اللوحة
-    toggleBtn?.addEventListener('click', () => customizerPanel.classList.toggle('hidden'));
-    closeBtn?.addEventListener('click', () => customizerPanel.classList.add('hidden'));
+    // 1. زر الفتح والتبديل
+    if (toggleBtn && customizerPanel) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            customizerPanel.classList.toggle('hidden');
+        });
+    }
+
+    // 2. زر الإغلاق داخل اللوحة
+    if (closeBtn && customizerPanel) {
+        closeBtn.addEventListener('click', () => {
+            customizerPanel.classList.add('hidden');
+        });
+    }
+
+    // 3. إغلاق اللوحة عند النقر خارجها (اختياري وسلس)
+    document.addEventListener('click', (e) => {
+        if (customizerPanel && 
+            !customizerPanel.contains(e.target) && 
+            !toggleBtn?.contains(e.target) && 
+            !customizerPanel.classList.contains('hidden')) {
+            customizerPanel.classList.add('hidden');
+        }
+    });
+});
 
     // 1. تغيير لون التوهج النيون
     primaryColorPicker?.addEventListener('input', (e) => {
