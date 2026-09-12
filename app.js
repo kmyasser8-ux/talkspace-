@@ -1,4 +1,10 @@
-/* ==========================================================================
+// دالة الفتح والإغلاق المباشرة
+function toggleCustomizer() {
+    const panel = document.getElementById('customizer-panel');
+    if (panel) {
+        panel.classList.toggle('hidden');
+    }
+}  /* ==========================================================================
    TalkSpace Platform - Logic & Interactions
    ========================================================================== */
 
