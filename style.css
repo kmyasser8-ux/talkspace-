@@ -372,36 +372,41 @@ body {
     cursor: pointer;
     font-size: 0.8rem;
 }
-/* لوحة التخصيص والتحكم الذاتي المحدثة */
+/* لوحة التخصيص والتحكم الذاتي المحدثة */ /* إصلاح أبعاد وموقع لوحة التخصيص */
 .customizer-panel {
-    position: fixed;
-    top: 80px;
-    left: 20px;
-    width: 320px;
-    max-height: calc(100vh - 100px); /* يضمن عدم خروج اللوحة عن حدود الشاشة */
-    overflow-y: auto; /* إضافة شريط تمرير داخلي عند كبر المحتوى */
-    background: rgba(13, 17, 23, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-section-1, #00f2fe);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    z-index: 999999; /* أولوية عرض مطلقة فوق كل عناصر الصفحة */
-    transition: all 0.3s ease-in-out;
+    position: fixed !important;
+    top: 80px !important;
+    left: 20px !important;
+    width: 320px !important;
+    max-width: 90vw !important;
+    max-height: calc(100vh - 120px) !important;
+    overflow-y: auto !important;
+    background: rgba(13, 17, 23, 0.95) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid var(--border-section-1, #00f2fe) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+    z-index: 999999 !important;
+    box-sizing: border-box !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
 }
 
-/* تخصيص شكل شريط التمرير الداخلي للوحة */
-.customizer-panel::-webkit-scrollbar {
-    width: 6px;
-}
-.customizer-panel::-webkit-scrollbar-thumb {
-    background: var(--border-section-1, #00f2fe);
-    border-radius: 10px;
-}
-
-/* إخفاء اللوحة */
+/* إخفاء اللوحة جانباً */
 .customizer-panel.hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(-30px);
+    display: none !important;
+}
+
+/* ترتيب المجموعات الداخلية رأسياً */
+.customizer-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+}
+
+.control-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
 }
