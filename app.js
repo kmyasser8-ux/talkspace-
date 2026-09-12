@@ -165,3 +165,83 @@ document.querySelectorAll('.icon-btn').forEach(button => {
         }
     });
 });
+// --- محرك التحكم والتخصيص الذاتي ---
+document.addEventListener('DOMContentLoaded', () => {
+    const customizerPanel = document.getElementById('customizer-panel');
+    const toggleBtn = document.getElementById('toggle-customizer-btn');
+    const closeBtn = document.getElementById('close-customizer-btn');
+    
+    const primaryColorPicker = document.getElementById('primary-color-picker');
+    const bgColorPicker = document.getElementById('bg-color-picker');
+    const fontSelect = document.getElementById('font-family-select');
+    const fontSizeRange = document.getElementById('font-size-range');
+    const resetBtn = document.getElementById('reset-theme-btn');
+
+    // فتح وإغلاق اللوحة
+    toggleBtn?.addEventListener('click', () => customizerPanel.classList.toggle('hidden'));
+    closeBtn?.addEventListener('click', () => customizerPanel.classList.add('hidden'));
+
+    // 1. تغيير لون التوهج النيون
+    primaryColorPicker?.addEventListener('input', (e) => {
+        const color = e.target.value;
+        document.documentElement.style.setProperty('--border-section-1', color);
+        localStorage.setItem('talkspace_custom_primary', color);
+    });
+
+    // 2. تغيير لون الخلفية
+    bgColorPicker?.addEventListener('input', (e) => {
+        const color = e.target.value;
+        document.body.style.backgroundColor = color;
+        localStorage.setItem('talkspace_custom_bg', color);
+    });
+
+    // 3. تغيير الخط
+    fontSelect?.addEventListener('change', (e) => {
+        const font = e.target.value;
+        document.body.style.fontFamily = font;
+        localStorage.setItem('talkspace_custom_font', font);
+    });
+
+    // 4. تغيير حجم الخط
+    fontSizeRange?.addEventListener('input', (e) => {
+        const size = e.target.value + 'px';
+        document.body.style.fontSize = size;
+        localStorage.setItem('talkspace_custom_fontsize', size);
+    });
+
+    // 5. تحميل التفضيلات المحفوظة تلقائياً عند فتح الصفحة
+    function loadSavedTheme() {
+        const savedPrimary = localStorage.getItem('talkspace_custom_primary');
+        const savedBg = localStorage.getItem('talkspace_custom_bg');
+        const savedFont = localStorage.getItem('talkspace_custom_font');
+        const savedFontSize = localStorage.getItem('talkspace_custom_fontsize');
+
+        if (savedPrimary) {
+            document.documentElement.style.setProperty('--border-section-1', savedPrimary);
+            if (primaryColorPicker) primaryColorPicker.value = savedPrimary;
+        }
+        if (savedBg) {
+            document.body.style.backgroundColor = savedBg;
+            if (bgColorPicker) bgColorPicker.value = savedBg;
+        }
+        if (savedFont) {
+            document.body.style.fontFamily = savedFont;
+            if (fontSelect) fontSelect.value = savedFont;
+        }
+        if (savedFontSize) {
+            document.body.style.fontSize = savedFontSize;
+            if (fontSizeRange) fontSizeRange.value = parseInt(savedFontSize);
+        }
+    }
+
+    // 6. استعادة الإعدادات الافتراضية
+    resetBtn?.addEventListener('click', () => {
+        localStorage.removeItem('talkspace_custom_primary');
+        localStorage.removeItem('talkspace_custom_bg');
+        localStorage.removeItem('talkspace_custom_font');
+        localStorage.removeItem('talkspace_custom_fontsize');
+        location.reload();
+    });
+
+    loadSavedTheme();
+});
