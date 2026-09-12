@@ -29,108 +29,112 @@ body {
 }
 
 /* ==========================================
-   تنسيق الشريط العلوي الاحترافي (Navbar)
+   تنسيق شريط الأيقونات الاحترافي
    ========================================== */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 75px;
+    height: 70px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 50px;
-    background: rgba(13, 17, 23, 0.85);
+    padding: 0 40px;
+    background: rgba(10, 14, 23, 0.9);
     backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* الشعار */
 .logo {
-    font-size: 1.7rem;
-    font-weight: 800;
+    font-size: 1.5rem;
+    font-weight: bold;
     color: #00f2fe;
     display: flex;
     align-items: center;
-    gap: 12px;
-    letter-spacing: 0.5px;
+    gap: 10px;
 }
 
-.logo i {
-    font-size: 1.8rem;
-    filter: drop-shadow(0 0 8px #00f2fe);
-}
-
-/* روابط التنقل السريع */
-.nav-links {
+/* شريط أزرار الأيقونات */
+.nav-icons {
     display: flex;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.04);
-    padding: 6px 12px;
-    border-radius: 30px;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 20px;
+    border-radius: 40px;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.nav-btn {
-    color: #c9d1d9;
-    text-decoration: none;
-    padding: 8px 18px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border-radius: 20px;
+.icon-btn {
+    position: relative;
+    color: #8b949e;
+    font-size: 1.3rem;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 8px;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
 
-.nav-btn:hover {
-    color: #fff;
+.icon-btn:hover {
+    color: #00f2fe;
     background: rgba(0, 242, 254, 0.15);
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
 }
 
-/* بطاقة المستخدم */
-.user-profile-summary {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.username {
-    font-weight: bold;
-    font-size: 0.95rem;
+/* ظهور اسم الأيقونة عند حوم الماوس فوقها (Tooltip) */
+.icon-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -35px;
+    background: #161b22;
     color: #fff;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.user-status {
-    font-size: 0.75rem;
-    color: #2ed573;
+.icon-btn:hover::after {
+    opacity: 1;
+}
+
+/* أيقونة الحساب الشخصي */
+.user-profile {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
+    position: relative;
 }
 
-.user-status i {
-    font-size: 0.5rem;
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #2ed573;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #2ed573;
 }
 
-.avatar-wrapper img {
+.avatar-icon {
     width: 42px;
     height: 42px;
     border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
     border: 2px solid #00f2fe;
-    object-fit: cover;
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #00f2fe;
+    font-size: 1.1rem;
 }
 /* ==========================================
    3. نظام الأقسام ملء الشاشة (Full-Screen Layout)
