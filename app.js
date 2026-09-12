@@ -195,12 +195,20 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('talkspace_custom_bg', color);
     });
 
-    // 3. تغيير الخط
-    fontSelect?.addEventListener('change', (e) => {
-        const font = e.target.value;
-        document.body.style.fontFamily = font;
-        localStorage.setItem('talkspace_custom_font', font);
-    });
+   const fontSelect = document.getElementById('font-family-select');
+
+fontSelect?.addEventListener('change', (e) => {
+    const selectedFont = e.target.value;
+    document.body.style.fontFamily = selectedFont;
+    localStorage.setItem('talkspace_custom_font', selectedFont);
+});
+
+// استرجاع الخط المحفوظ فور فتح الصفحة
+const savedFont = localStorage.getItem('talkspace_custom_font');
+if (savedFont) {
+    document.body.style.fontFamily = savedFont;
+    if (fontSelect) fontSelect.value = savedFont;
+}
 
     // 4. تغيير حجم الخط
     fontSizeRange?.addEventListener('input', (e) => {
