@@ -50,43 +50,55 @@
     <i class="fa-solid fa-sliders"></i>
 </button>
 
+<!-- زر فتح لوحة التحكم المباشر -->
+<button id="toggle-customizer-btn" class="icon-btn" onclick="toggleCustomizer()" title="تخصيص الواجهة">
+    <i class="fa-solid fa-sliders"></i>
+</button>
+
 <!-- لوحة التخصيص والتحكم الذاتي -->
 <aside id="customizer-panel" class="customizer-panel hidden">
+    <!-- 1. ترويسة اللوحة وزر الإغلاق -->
     <div class="customizer-header">
         <h3><i class="fa-solid fa-paint-roller"></i> لوحة التحكم الذاتي</h3>
-    <!-- قسم مغير الخلفيات الديناميكية -->
-<div class="control-group">
-    <label><i class="fa-solid fa-image"></i> خلفية الواجهة الديناميكية:</label>
-    
-    <!-- خيار 1: إضافة رابط صورة أونلاين -->
-    <input type="url" id="bg-url-input" placeholder="ضع رابط صورة (https://...)" class="custom-input">
-    
-    <!-- خيار 2: رفع صورة من الجهاز -->
-    <label for="bg-file-input" class="file-upload-btn">
-        <i class="fa-solid fa-upload"></i> رفع صورة من الحاسوب
-    </label>
-    <input type="file" id="bg-file-input" accept="image/*" style="display: none;">
-    
-    <!-- زر إزالة الخلفية وإرجاع اللون -->
-    <button id="remove-bg-btn" class="sub-btn">إزالة الخلفية</button>
-</div>    <button id="close-customizer-btn"><i class="fa-solid fa-xmark"></i></button>   
-      </div>
- 
+        <button id="close-customizer-btn" onclick="toggleCustomizer()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- 2. محتوى اللوحة الداخلي -->
     <div class="customizer-body">
-        <!-- 1. التحكم بالألوان -->
+        
+        <!-- قسم 1: مغير الخلفيات الديناميكية -->
+        <div class="control-group">
+            <label><i class="fa-solid fa-image"></i> خلفية الواجهة الديناميكية:</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="url" id="bg-url-input" placeholder="ضع رابط صورة (https://...)" class="custom-input">
+                <button id="apply-url-btn" class="sub-btn" style="width: auto; padding: 0 10px; background: var(--border-section-1, #00f2fe); color: #000;">تطبيق</button>
+            </div>
+            <label for="bg-file-input" class="file-upload-btn" style="margin-top: 8px;">
+                <i class="fa-solid fa-upload"></i> رفع صورة من الحاسوب
+            </label>
+            <input type="file" id="bg-file-input" accept="image/*" style="display: none;">
+            <button id="remove-bg-btn" class="sub-btn" style="margin-top: 5px;">إزالة الخلفية</button>
+        </div>
+
+        <!-- قسم 2: التحكم بالألوان -->
         <div class="control-group">
             <label><i class="fa-solid fa-droplet"></i> لون التوهج (Neon):</label>
             <input type="color" id="primary-color-picker" value="#00f2fe">
         </div>
 
+        <!-- قسم 3: التحكم بالخطوط -->
         <div class="control-group">
-            <label><i class="fa-solid fa-fill-drip"></i> لون الخلفية الأساسية:</label>
-            <input type="color" id="bg-color-picker" value="#0a0e17">
+            <label><i class="fa-solid fa-font"></i> نوع الخط العربي:</label>
+            <select id="font-family-select" class="custom-input">
+                <option value="system-ui, sans-serif">الافتراضي (System)</option>
+                <option value="'Cairo', sans-serif">خط القاهرة (Cairo)</option>
+                <option value="'Tajawal', sans-serif">خط تجوال (Tajawal)</option>
+                <option value="'Amiri', serif">خط أميري (Amiri)</option>
+            </select>
         </div>
 
-        <!-- 2. التحكم بالخطوط -->
-        <div class="control-group">
-    <label><i class="fa-solid fa-image"></i> خلفية الواجهة الديناميكية:</label>
+    </div> <!-- نهاية customizer-body -->
+</aside> <!-- نهاية customizer-panel -->
     
     <!-- حقل الرابط مع زر تطبيق مباشر -->
     <div style="display: flex; gap: 5px;">
