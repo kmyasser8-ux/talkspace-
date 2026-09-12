@@ -372,3 +372,36 @@ body {
     cursor: pointer;
     font-size: 0.8rem;
 }
+/* لوحة التخصيص والتحكم الذاتي المحدثة */
+.customizer-panel {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    width: 320px;
+    max-height: calc(100vh - 100px); /* يضمن عدم خروج اللوحة عن حدود الشاشة */
+    overflow-y: auto; /* إضافة شريط تمرير داخلي عند كبر المحتوى */
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-section-1, #00f2fe);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    z-index: 999999; /* أولوية عرض مطلقة فوق كل عناصر الصفحة */
+    transition: all 0.3s ease-in-out;
+}
+
+/* تخصيص شكل شريط التمرير الداخلي للوحة */
+.customizer-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.customizer-panel::-webkit-scrollbar-thumb {
+    background: var(--border-section-1, #00f2fe);
+    border-radius: 10px;
+}
+
+/* إخفاء اللوحة */
+.customizer-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-30px);
+}
