@@ -1,191 +1,923 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="dark">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TalkSpace - المنصة التفاعلية</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=6.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#06090f">
+  <meta name="description" content="TalkSpace — مساحة تفاعلية للأفكار والمقالات وإدارة الأولويات">
+
+  <title>TalkSpace — Cyber Eye</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- الترويسة الرئيسية -->
-    <header class="main-header">
-        <div class="logo-container">
-            <!-- الشعار السداسي المطابق للصورة والهوية البصرية -->
-            <div class="brand-logo-hexagon">
-                <svg fill="#000000" viewBox="-3.2 -3.2 38.40 38.40" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.32">
-                    <g id="SVGRepo_bgCarrier">
-                        <path transform="translate(-3.2, -3.2), scale(2.4)" fill="#0000ff" d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z"></path>
-                    </g>
-                    <g id="SVGRepo_iconCarrier">
-                        <path fill="#00f2fe" d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm11-15.985l-.001-.014v-.023c0-.007 0-.015-.002-.022v-.001a.52.52 0 00-.052-.188l-.003-.005-.006-.012C26.797 15.495 23.446 9.5 16 9.5S5.203 15.494 5.063 15.75a.662.662 0 00-.006.012l-.002.004a.52.52 0 00-.054.189L5 15.978v.045a.52.52 0 00.064.228c.139.255 3.492 6.249 10.937 6.249s10.797-5.994 10.936-6.249a.522.522 0 00.063-.228v-.008zM25.89 16c-.558.868-2.645 3.747-6.423 4.94l.088-.065a.278.278 0 00-.053-.478.27.27 0 00-.272.035c-.664.5-1.432.84-2.245.992a12.032 12.032 0 01-1.968 0c-2.184-.403-3.902-2.12-4.332-4.33a.601.601 0 00.212-.703c-.098-.256-.355-.412-.624-.377s-.478.252-.509.525.127.531.381.626a6.037 6.037 0 002.374 3.77C8.75 19.74 6.667 16.867 6.11 16c.563-.874 2.675-3.787 6.505-4.964a5.02 5.02 0 00-.073.052.278.278 0 00-.1.309.272.272 0 00.416.14 5.372 5.372 0 012.43-.971.268.268 0 00.05-.011 11.598 11.598 0 011.325 0 .267.267 0 00.05.011c2.252.3 4.08 2.016 4.574 4.239a.601.601 0 00-.119.724.584.584 0 001.102-.296.593.593 0 00-.457-.57 6.07 6.07 0 00-2.437-3.63c3.836 1.174 5.952 4.093 6.515 4.967zm-5.07.017c0-2.698-2.162-4.891-4.82-4.891s-4.82 2.194-4.82 4.891S13.343 20.91 16 20.91s4.82-2.195 4.82-4.892zm-.544 0c0 2.393-1.918 4.34-4.276 4.34s-4.277-1.947-4.277-4.34 1.92-4.339 4.277-4.339 4.276 1.947 4.276 4.34zm-2.7-1.343c0-.745-.519-1.386-1.24-1.53-.72-.145-1.44.247-1.72.936s-.04 1.483.573 1.894l-.428 2.627a.315.315 0 00.318.379h1.92c.209 0 .35-.17.316-.379l-.429-2.626c.431-.289.69-.777.69-1.3zm4.347 2.043a.275.275 0 00-.27-.308.274.274 0 00-.27.244 5.49 5.49 0 01-1.373 3.06.276.276 0 10.143.458.27.27 0 00.26-.086 6.041 6.041 0 001.51-3.368zm-9.87-4.868a.27.27 0 00-.385.011 6.04 6.04 0 00-1.567 3.267.276.276 0 00.27.317c.135 0 .249-.1.269-.236a5.49 5.49 0 011.423-2.968.278.278 0 00-.01-.39z"></path>
-                    </g>
-                </svg>
-            </div>
-            <h2>TalkSpace</h2>
-        </div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="hex-grid"></div>
 
-        <nav class="header-nav">
-            <button class="nav-tab active" data-tab="dashboard">اللوحة الرئيسية</button>
-            <button class="nav-tab" data-tab="analytics">مركز الرصد</button>
-            <button class="nav-tab" data-tab="studio">استوديو التحكم</button>
-        </nav>
+  <!-- ================= HEADER ================= -->
 
-        <div class="header-actions">
-            <button id="quick-theme-btn" class="icon-btn" title="تبديل الوضع">
-                <i class="fa-solid fa-moon"></i>
-            </button>
-            <button id="open-studio-btn" class="icon-btn" title="تخصيص الهوية">
-                <i class="fa-solid fa-sliders"></i>
-            </button>
-            <button id="bell-btn" class="icon-btn" title="التنبيهات">
-                <i class="fa-solid fa-bell"></i>
-            </button>
-        </div>
-    </header>
+  <header class="topbar glass">
 
-    <!-- لوحة التخصيص الذكي (Customizer Studio) -->
-    <aside id="studio-drawer" class="studio-drawer hidden">
-        <div class="drawer-header">
-            <h3><i class="fa-solid fa-sliders"></i> خصائص الهوية البصرية</h3>
-            <button id="close-studio-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-        </div>
+    <a class="brand" href="#home" data-nav="home">
 
-        <div class="drawer-body">
-            <div class="control-item">
-                <label>نمط المظهر العام:</label>
-                <button id="drawer-theme-toggle" class="btn-secondary">
-                    <span id="theme-label-text">الوضع الداكن</span>
-                    <i id="theme-label-icon" class="fa-solid fa-moon"></i>
-                </button>
-            </div>
+      <span class="logo-shell">
+        <span class="logo-hex">
 
-            <div class="control-item">
-                <label>لون النيون والأعين السيبرانية:</label>
-                <input type="color" id="primary-color" value="#00f2fe">
-            </div>
+          <svg viewBox="0 0 120 120">
 
-            <div class="control-item">
-                <label>درجة الشفافية وضبابية الزجاج:</label>
-                <input type="range" id="blur-slider" min="0" max="25" value="15">
-            </div>
+            <path
+              class="eye-outline"
+              d="M14 60C27 39 43 29 60 29s33 10 46 31c-13 21-29 31-46 31S27 81 14 60Z"
+            />
 
-            <div class="control-item">
-                <label>صورة خلفية تخصيصية:</label>
-                <input type="url" id="bg-url" placeholder="رابط صورة مباشر..." class="text-input">
-                <button id="apply-bg-btn" class="btn-primary" style="margin-top:6px;">تطبيق خلفية</button>
-            </div>
+            <circle
+              class="eye-ring"
+              cx="60"
+              cy="60"
+              r="23"
+            />
 
-            <button id="reset-all-btn" class="btn-danger"><i class="fa-solid fa-rotate-left"></i> إرجاع الضبط الافتراضي</button>
-        </div>
-    </aside>
+            <circle
+              class="eye-pupil"
+              cx="60"
+              cy="60"
+              r="8"
+            />
 
-    <!-- مساحة العمل الرئيسية والتبويبات -->
-    <main class="main-content">
+            <path
+              class="keyhole"
+              d="M60 42a7 7 0 0 0-7 7c0 3 1.5 5.6 3.8 6.8L54 72h12l-2.8-16.2A7.9 7.9 0 0 0 67 49a7 7 0 0 0-7-7Z"
+            />
 
-        <!-- 1. تبويب اللوحة الرئيسية: بطاقات سداسية مع الأعين التفاعلية -->
-        <section id="dashboard" class="tab-pane active">
-            <div class="cards-hex-grid">
+            <circle
+              class="orbit-dot"
+              cx="36"
+              cy="47"
+              r="2.6"
+            />
 
-                <div class="hex-card" id="card-1">
-                    <div class="hex-card-inner">
-                        <div class="hex-icon-wrapper">
-                            <i class="fa-solid fa-eye"></i>
-                        </div>
-                        <span class="card-tag">Cyber Eye Core</span>
-                        <h3>وحدة الرؤية التحليلية</h3>
-                        <p>نظام رصد البيانات عبر المكون السداسي بالذكاء الاصطناعي لتتبع المؤشرات والمشاريع.</p>
-                        <button class="hex-action-btn" onclick="executeCardTask('تم تشغيل وحدة الرؤية التحليلية بنجاح!')">
-                            <i class="fa-solid fa-play"></i> تشغيل الرصد
-                        </button>
-                    </div>
-                </div>
+            <circle
+              class="orbit-dot"
+              cx="85"
+              cy="73"
+              r="2.6"
+            />
 
-                <div class="hex-card" id="card-2">
-                    <div class="hex-card-inner">
-                        <div class="hex-icon-wrapper">
-                            <i class="fa-solid fa-shield-cat"></i>
-                        </div>
-                        <span class="card-tag">Hexagon Shield</span>
-                        <h3>جدار الحماية السداسي</h3>
-                        <p>تشفير المكونات والبيانات الحساسة بأعلى البروتوكولات المتقدمة للمنصة.</p>
-                        <button class="hex-action-btn" onclick="executeCardTask('تم إكمال مسح الحماية السداسية 100%')">
-                            <i class="fa-solid fa-shield-halved"></i> فحص الأمان
-                        </button>
-                    </div>
-                </div>
+          </svg>
 
-                <div class="hex-card" id="card-3">
-                    <div class="hex-card-inner">
-                        <div class="hex-icon-wrapper">
-                            <i class="fa-solid fa-microchip"></i>
-                        </div>
-                        <span class="card-tag">Studio Engine</span>
-                        <h3>محرك التخصيص الحركي</h3>
-                        <p>التحكم الكامل بألوان النيون المتوهجة والخطوط وتأثيرات الزجاج الديناميكية.</p>
-                        <button class="hex-action-btn" onclick="openStudioDrawer()">
-                            <i class="fa-solid fa-sliders"></i> فتح الاستوديو
-                        </button>
-                    </div>
-                </div>
+        </span>
+      </span>
 
-            </div>
-        </section>
+      <span class="brand-copy">
+        <strong>TalkSpace</strong>
+        <small>CYBER IDEAS LAB</small>
+      </span>
 
-        <!-- 2. تبويب مركز الرصد -->
-        <section id="analytics" class="tab-pane">
-            <div class="glass-box">
-                <h2><i class="fa-solid fa-chart-pie"></i> مركز رصد المعالجة والبيانات</h2>
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <i class="fa-solid fa-bolt"></i>
-                        <h4 id="counter-1">0%</h4>
-                        <p>سرعة الاستجابة</p>
-                    </div>
-                    <div class="metric-card">
-                        <i class="fa-solid fa-eye"></i>
-                        <h4 id="counter-2">0</h4>
-                        <p>عمليات التحليل النشطة</p>
-                    </div>
-                    <div class="metric-card">
-                        <i class="fa-solid fa-database"></i>
-                        <h4 id="counter-3">0 GB</h4>
-                        <p>حجم البيانات المعالجة</p>
-                    </div>
-                </div>
-                <button class="btn-primary" id="start-metrics-btn" style="margin-top:20px;">
-                    <i class="fa-solid fa-rotate"></i> تحديث القياسات فوراً
-                </button>
-            </div>
-        </section>
+    </a>
 
-        <!-- 3. تبويب استوديو التحكم -->
-        <section id="studio" class="tab-pane">
-            <div class="glass-box">
-                <h2><i class="fa-solid fa-terminal"></i> أداة تنفيذ الأوامر المباشرة</h2>
-                <div class="console-box">
-                    <p class="console-line">> TalkSpace OS initialized...</p>
-                    <p class="console-line">> Hexagon Cyber Eye Status: <span style="color:#00f2fe;">Active</span></p>
-                </div>
-                <div class="interactive-btns">
-                    <button class="btn-secondary" onclick="runConsoleCmd('Clear Cache')"><i class="fa-solid fa-broom"></i> تنظيف الذاكرة</button>
-                    <button class="btn-secondary" onclick="runConsoleCmd('Sync Repository')"><i class="fa-solid fa-rotate"></i> مزامنة المستودع</button>
-                </div>
-            </div>
-        </section>
 
-    </main>
+    <nav class="main-nav">
 
-    <!-- نظام الإشعارات والتنبيهات المباشر -->
-    <div id="toast" class="toast-popup hidden">
-        <i class="fa-solid fa-circle-check"></i>
-        <span id="toast-text">تمت العملية!</span>
+      <button class="nav-link active" data-nav="home">
+        الرئيسية
+      </button>
+
+      <button class="nav-link" data-nav="articles">
+        المقالات
+      </button>
+
+      <button class="nav-link" data-nav="board">
+        الأولويات
+      </button>
+
+      <button class="nav-link" data-nav="about">
+        حول المنصة
+      </button>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+      <button
+        class="icon-btn"
+        id="themeBtn"
+        title="تبديل الوضع"
+      >
+        ◐
+      </button>
+
+      <button
+        class="icon-btn notification-btn"
+        id="notifyBtn"
+        title="الإشعارات"
+      >
+        ♧
+        <span class="notification-dot"></span>
+      </button>
+
+      <button
+        class="studio-btn"
+        id="studioBtn"
+      >
+        <span class="studio-orb"></span>
+        استوديو التحكم
+      </button>
+
     </div>
 
-    <script src="app.js?v=6.0"></script>
+  </header>
+
+
+  <!-- ================= MAIN ================= -->
+
+  <main>
+
+    <!-- HOME -->
+
+    <section class="view active" id="view-home">
+
+      <div class="hero section-wrap">
+
+        <div class="hero-copy">
+
+          <div class="eyebrow">
+            <span></span>
+            مساحة للأفكار التي تستحق النقاش
+          </div>
+
+          <h1>
+            أفكار <em>أذكى.</em>
+            <br>
+            حوارات <span>أعمق.</span>
+          </h1>
+
+          <p>
+            TalkSpace مساحة رقمية تجمع المقالات،
+            الأفكار قيد التطوير، وإدارة الأولويات
+            في تجربة واحدة.
+          </p>
+
+          <div class="hero-actions">
+
+            <button
+              class="primary-btn"
+              data-nav="articles"
+            >
+              استكشف المقالات
+              <span>←</span>
+            </button>
+
+            <button
+              class="ghost-btn"
+              data-nav="board"
+            >
+              افتح لوحة الأولويات
+            </button>
+
+          </div>
+
+
+          <div class="hero-stats">
+
+            <div>
+              <strong id="statArticles">06</strong>
+              <span>مقالة مختارة</span>
+            </div>
+
+            <div>
+              <strong id="statIdeas">08</strong>
+              <span>فكرة نشطة</span>
+            </div>
+
+            <div>
+              <strong id="statDone">03</strong>
+              <span>مهمة مكتملة</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CYBER EYE -->
+
+        <div class="hero-visual">
+
+          <div class="cyber-core">
+
+            <div class="core-hex"></div>
+
+            <div class="core-scan"></div>
+
+            <svg
+              class="hero-eye"
+              viewBox="0 0 360 220"
+            >
+
+              <path
+                d="M25 110C69 48 119 25 180 25s111 23 155 85c-44 62-94 85-155 85S69 172 25 110Z"
+              />
+
+              <circle
+                cx="180"
+                cy="110"
+                r="65"
+              />
+
+              <circle
+                cx="180"
+                cy="110"
+                r="22"
+              />
+
+              <path
+                d="M180 65a19 19 0 0 0-19 19c0 8 4.6 15 11.4 17.3L165 150h30l-7.4-48.7A19.2 19.2 0 0 0 199 84a19 19 0 0 0-19-19Z"
+              />
+
+              <circle
+                cx="115"
+                cy="82"
+                r="5"
+              />
+
+              <circle
+                cx="244"
+                cy="139"
+                r="5"
+              />
+
+            </svg>
+
+            <div class="core-label">
+              TALKSPACE / 01
+            </div>
+
+          </div>
+
+
+          <div class="floating-chip chip-a">
+            IDEAS <b>+</b>
+          </div>
+
+          <div class="floating-chip chip-b">
+            DISCUSS <b>↗</b>
+          </div>
+
+          <div class="floating-chip chip-c">
+            FOCUS <b>∞</b>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEATURED -->
+
+      <section class="section-wrap featured-section">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="section-kicker">
+              CURATED SIGNALS
+            </span>
+
+            <h2>
+              أفكار تستحق وقتك
+            </h2>
+          </div>
+
+          <button
+            class="text-btn"
+            data-nav="articles"
+          >
+            عرض كل المقالات ←
+          </button>
+
+        </div>
+
+        <div
+          class="article-grid"
+          id="featuredGrid"
+        ></div>
+
+      </section>
+
+
+      <!-- MINI BOARD -->
+
+      <section class="section-wrap board-preview-section">
+
+        <div class="section-heading">
+
+          <div>
+            <span class="section-kicker">
+              PRIORITY CONTROL
+            </span>
+
+            <h2>
+              ماذا يحدث الآن؟
+            </h2>
+          </div>
+
+          <button
+            class="text-btn"
+            data-nav="board"
+          >
+            فتح اللوحة ←
+          </button>
+
+        </div>
+
+        <div
+          class="mini-board"
+          id="miniBoard"
+        ></div>
+
+      </section>
+
+    </section>
+
+
+    <!-- ================= ARTICLES ================= -->
+
+    <section
+      class="view"
+      id="view-articles"
+    >
+
+      <div class="page-head section-wrap">
+
+        <div>
+
+          <span class="section-kicker">
+            TALKSPACE LIBRARY
+          </span>
+
+          <h1>
+            المقالات والأفكار
+          </h1>
+
+          <p>
+            محتوى مختار للقراءة المركّزة،
+            بعيدًا عن الضجيج.
+          </p>
+
+        </div>
+
+
+        <div class="filter-row">
+
+          <button
+            class="filter-btn active"
+            data-filter="all"
+          >
+            الكل
+          </button>
+
+          <button
+            class="filter-btn"
+            data-filter="سوسيولوجيا"
+          >
+            سوسيولوجيا
+          </button>
+
+          <button
+            class="filter-btn"
+            data-filter="قيادة"
+          >
+            قيادة
+          </button>
+
+          <button
+            class="filter-btn"
+            data-filter="تكنولوجيا"
+          >
+            تكنولوجيا
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="section-wrap article-grid article-grid-large"
+        id="articlesGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- ================= KANBAN ================= -->
+
+    <section
+      class="view"
+      id="view-board"
+    >
+
+      <div class="page-head section-wrap">
+
+        <div>
+
+          <span class="section-kicker">
+            KANBAN / PRIORITY MANAGEMENT
+          </span>
+
+          <h1>
+            لوحة الأولويات
+          </h1>
+
+          <p>
+            رتّب أفكارك. حرّكها. أنجزها.
+          </p>
+
+        </div>
+
+        <button
+          class="primary-btn"
+          id="addTaskTop"
+        >
+          + إضافة مهمة
+        </button>
+
+      </div>
+
+
+      <div class="section-wrap board-wrap">
+
+        <div
+          class="board"
+          id="kanbanBoard"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section
+      class="view"
+      id="view-about"
+    >
+
+      <div class="section-wrap about-layout">
+
+        <div class="about-card glass">
+
+          <span class="section-kicker">
+            ABOUT TALKSPACE
+          </span>
+
+          <h1>
+            مساحة رقمية
+            <br>
+            <span>تفكر معك.</span>
+          </h1>
+
+          <p>
+            TalkSpace نموذج واجهة تفاعلية مبني بالكامل
+            بـ HTML5 وCSS3 وVanilla JavaScript.
+            الهوية مستوحاة من العين السيبرانية والإطار
+            السداسي: تركيز، رؤية، واتصال.
+          </p>
+
+          <div class="tech-pills">
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>Vanilla JS</span>
+            <span>Glassmorphism</span>
+            <span>RTL</span>
+          </div>
+
+        </div>
+
+
+        <div class="principles">
+
+          <article class="glass principle-card">
+            <b>01</b>
+            <h3>Focus</h3>
+            <p>
+              واجهة تقلل الضوضاء وتضع الفكرة في المركز.
+            </p>
+          </article>
+
+          <article class="glass principle-card">
+            <b>02</b>
+            <h3>Signal</h3>
+            <p>
+              ألوان وإشارات بصرية تساعدك على فهم الحالة بسرعة.
+            </p>
+          </article>
+
+          <article class="glass principle-card">
+            <b>03</b>
+            <h3>Flow</h3>
+            <p>
+              انتقالات فورية وتجربة SPA بدون إعادة تحميل الصفحة.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= CUSTOMIZER ================= -->
+
+  <aside
+    class="studio-drawer"
+    id="studioDrawer"
+  >
+
+    <div
+      class="drawer-backdrop"
+      id="drawerBackdrop"
+    ></div>
+
+    <div class="drawer-panel">
+
+      <div class="drawer-head">
+
+        <div>
+
+          <span class="section-kicker">
+            CUSTOMIZER STUDIO
+          </span>
+
+          <h2>
+            ضبط الهوية
+          </h2>
+
+        </div>
+
+        <button
+          class="close-btn"
+          id="closeStudio"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="control-group">
+
+        <label>
+          اللون السماوي
+
+          <output id="cyanValue">
+            #00F2FE
+          </output>
+        </label>
+
+        <input
+          type="color"
+          id="cyanPicker"
+          value="#00f2fe"
+        >
+
+      </div>
+
+
+      <div class="control-group">
+
+        <label>
+          الأزرق الكهربائي
+
+          <output id="blueValue">
+            #0000FF
+          </output>
+        </label>
+
+        <input
+          type="color"
+          id="bluePicker"
+          value="#0000ff"
+        >
+
+      </div>
+
+
+      <div class="control-group">
+
+        <label>
+          ضبابية الزجاج
+
+          <output id="blurValue">
+            18px
+          </output>
+
+        </label>
+
+        <input
+          type="range"
+          id="blurRange"
+          min="4"
+          max="36"
+          value="18"
+        >
+
+      </div>
+
+
+      <div class="control-group">
+
+        <label>
+          شفافية الزجاج
+
+          <output id="glassValue">
+            0.62
+          </output>
+
+        </label>
+
+        <input
+          type="range"
+          id="glassRange"
+          min="0.3"
+          max="0.9"
+          step="0.01"
+          value="0.62"
+        >
+
+      </div>
+
+
+      <div class="control-group">
+
+        <label>
+          الخلفية
+        </label>
+
+        <div class="background-grid">
+
+          <button
+            class="bg-option active"
+            data-bg="deep"
+            style="--bg-thumb:#06090f"
+          >
+            Deep Space
+          </button>
+
+          <button
+            class="bg-option"
+            data-bg="blue"
+            style="--bg-thumb:#07112b"
+          >
+            Blue Void
+          </button>
+
+          <button
+            class="bg-option"
+            data-bg="violet"
+            style="--bg-thumb:#12091d"
+          >
+            Violet Core
+          </button>
+
+          <button
+            class="bg-option"
+            data-bg="light"
+            style="--bg-thumb:#eef5f8"
+          >
+            Day Signal
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="drawer-preview glass">
+
+        <div class="preview-eye"></div>
+
+        <div>
+          <strong>
+            LIVE PREVIEW
+          </strong>
+
+          <span>
+            التعديلات تظهر فورًا
+          </span>
+        </div>
+
+      </div>
+
+
+      <button
+        class="reset-btn"
+        id="resetSettings"
+      >
+        ↺ إعادة ضبط الإعدادات
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- ================= ARTICLE MODAL ================= -->
+
+  <div
+    class="modal"
+    id="articleModal"
+  >
+
+    <div
+      class="modal-backdrop"
+      data-close-modal
+    ></div>
+
+    <article class="modal-card glass">
+
+      <button
+        class="close-btn"
+        data-close-modal
+      >
+        ×
+      </button>
+
+      <span
+        class="section-kicker"
+        id="modalTag"
+      >
+        TECHNOLOGY
+      </span>
+
+      <h2 id="modalTitle">
+        عنوان المقال
+      </h2>
+
+      <p
+        class="modal-date"
+        id="modalDate"
+      ></p>
+
+      <div class="modal-line"></div>
+
+      <p id="modalBody"></p>
+
+      <button
+        class="primary-btn"
+        data-close-modal
+      >
+        إغلاق والعودة
+      </button>
+
+    </article>
+
+  </div>
+
+
+  <!-- ================= TASK MODAL ================= -->
+
+  <div
+    class="modal"
+    id="taskModal"
+  >
+
+    <div
+      class="modal-backdrop"
+      data-close-task
+    ></div>
+
+    <form
+      class="modal-card glass task-form"
+      id="taskForm"
+    >
+
+      <button
+        type="button"
+        class="close-btn"
+        data-close-task
+      >
+        ×
+      </button>
+
+      <span class="section-kicker">
+        NEW PRIORITY
+      </span>
+
+      <h2>
+        إضافة مهمة
+      </h2>
+
+
+      <label>
+        اسم المهمة
+
+        <input
+          id="taskTitle"
+          required
+          maxlength="80"
+          placeholder="مثلاً: مراجعة فكرة المقال"
+        >
+      </label>
+
+
+      <label>
+        التفاصيل
+
+        <textarea
+          id="taskDescription"
+          maxlength="180"
+          placeholder="وصف قصير..."
+        ></textarea>
+
+      </label>
+
+
+      <label>
+        الأولوية
+
+        <select id="taskPriority">
+
+          <option value="high">
+            عالية
+          </option>
+
+          <option
+            value="medium"
+            selected
+          >
+            متوسطة
+          </option>
+
+          <option value="low">
+            منخفضة
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+        الحالة
+
+        <select id="taskStatus">
+
+          <option value="todo">
+            قيد الانتظار
+          </option>
+
+          <option value="doing">
+            جاري العمل
+          </option>
+
+          <option value="done">
+            تم الإنجاز
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <button
+        class="primary-btn"
+        type="submit"
+      >
+        إضافة إلى اللوحة
+      </button>
+
+    </form>
+
+  </div>
+
+
+  <!-- TOAST -->
+
+  <div
+    class="toast-stack"
+    id="toastStack"
+  ></div>
+
+
+  <script src="app.js"></script>
+
 </body>
 </html>
