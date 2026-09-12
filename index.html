@@ -42,7 +42,53 @@
 </header>
     <!-- ==================== [ محتوى اللوحة الرئيسية - Dashboard ] ==================== -->
     <main class="dashboard-container">
-        
+        <!-- زر فتح لوحة التحكم -->
+<button id="toggle-customizer-btn" class="icon-btn" title="تخصيص الواجهة">
+    <i class="fa-solid fa-sliders"></i>
+</button>
+
+<!-- لوحة التخصيص والتحكم الذاتي -->
+<aside id="customizer-panel" class="customizer-panel hidden">
+    <div class="customizer-header">
+        <h3><i class="fa-solid fa-paint-roller"></i> لوحة التحكم الذاتي</h3>
+        <button id="close-customizer-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="customizer-body">
+        <!-- 1. التحكم بالألوان -->
+        <div class="control-group">
+            <label><i class="fa-solid fa-droplet"></i> لون التوهج (Neon):</label>
+            <input type="color" id="primary-color-picker" value="#00f2fe">
+        </div>
+
+        <div class="control-group">
+            <label><i class="fa-solid fa-fill-drip"></i> لون الخلفية الأساسية:</label>
+            <input type="color" id="bg-color-picker" value="#0a0e17">
+        </div>
+
+        <!-- 2. التحكم بالخطوط -->
+        <div class="control-group">
+            <label><i class="fa-solid fa-font"></i> نوع الخط العربي:</label>
+            <select id="font-family-select">
+                <option value="system-ui, sans-serif">الافتراضي (System)</option>
+                <option value="'Cairo', sans-serif">خط القاهرة (Cairo)</option>
+                <option value="'Tajawal', sans-serif">خط تجوال (Tajawal)</option>
+                <option value="'Amiri', serif">خط أميري (Amiri)</option>
+            </select>
+        </div>
+
+        <!-- 3. حجم الخط -->
+        <div class="control-group">
+            <label><i class="fa-solid fa-text-height"></i> حجم الخط الرئيسي:</label>
+            <input type="range" id="font-size-range" min="14" max="20" value="16">
+        </div>
+
+        <!-- 4. إعادة التعيين -->
+        <button id="reset-theme-btn" class="reset-btn">
+            <i class="fa-solid fa-rotate-left"></i> إرجاع الإعدادات الافتراضية
+        </button>
+    </div>
+</aside>
       <main class="dashboard-container">
     
     <!-- القسم الأول: شاشة كاملة -->
