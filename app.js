@@ -144,4 +144,24 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(githubUrl, '_blank');
     });
 
+}); 
+// ==========================================
+// تفعيل أزرار الأيقونات للتنقل بين الأقسام
+// ==========================================
+document.querySelectorAll('.icon-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault(); // منع القفز المباشر السريع
+        
+        // جلب معرف القسم المطلوب من خاصية href
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            // التمرير السلس إلى القسم المحدد
+            targetSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
 });
