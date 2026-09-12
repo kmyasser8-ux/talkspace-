@@ -1,0 +1,190 @@
+/* ==========================================================================
+   1. متغيرات الألوان والتنسيق العام (التعديل الرئيسي لألوان المنصة يكون هنا)
+   ========================================================================== */
+:root {
+    --bg-color: #0d1117;                    /* لون خلفية الموقع الرئيسية */
+    --panel-bg: rgba(22, 27, 34, 0.75);     /* لون خلفية البطاقات والبطاقات الزجاجية */
+    --accent-color: #00f2fe;                /* اللون الأساسي المميز للمنصة (أزرق سماوي) */
+    --text-main: #c9d1d9;                   /* لون النصوص الرئيسية */
+    --border-color: rgba(255, 255, 255, 0.1);/* لون الحدود الخفيفة */
+    
+    /* ألوان درجات الأولويات */
+    --priority-high: #ff4757;               /* لون الأولوية العالية (أحمر) */
+    --priority-medium: #eccc68;             /* لون الأولوية المتوسطة (أصفر) */
+    --priority-low: #2ed573;                /* لون الأولوية المنخفضة (أخضر) */
+}
+
+/* ==========================================================================
+   2. التنسيق الأساسي للمستند
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* الخط المستعمل */
+}
+
+body {
+    background-color: var(--bg-color);      /* تطبيق لون الخلفية الداكن */
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* التأثير الزجاجي العصري (Glassmorphism) */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);            /* درجة الضبابية للخلفية */
+    border: 1px solid var(--border-color);
+    border-radius: 16px;                     /* درجة تدوير الزوايا */
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* الظل المنسدل */
+}
+
+/* ==========================================================================
+   3. شريط التنقل العلوي (Header Navbar)
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 15px 25px;
+    background: var(--panel-bg);
+    border-radius: 12px;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--accent-color);            /* لون الشعار */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-profile-summary img {
+    border-radius: 50%;                     /* جعل صورة الحساب دائرية */
+    border: 2px solid var(--accent-color);
+}
+
+/* ==========================================================================
+   4. توزيع أقسام الواجهة (Dashboard Grid Layout)
+   ========================================================================== */
+.dashboard-container {
+    display: grid;
+    /* إعادة توزيع الأقسام تلقائياً حسب حجم الشاشة */
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    color: var(--accent-color);            /* لون عناوين الكروت */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ==========================================================================
+   5. تنسيق الحقول والأزرار (Form Elements & Buttons)
+   ========================================================================== */
+input[type="text"], select, textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05); /* خلفية الحقول */
+    border: 1px solid var(--border-color);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent-color);     /* إضاءة الحدود عند الكتابة */
+}
+
+button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: var(--accent-color);      /* لون الزر عند تمرير الماوس */
+    color: #000;                           /* لون النص داخل الزر عند التمرير */
+}
+
+/* ==========================================================================
+   6. تنسيق قسم الأولويات (Task List)
+   ========================================================================== */
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.task-list {
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border-right: 4px solid var(--accent-color); /* الشريط الملون الجانبي */
+}
+
+/* تحديد ألوان الشريط الجانبي بناءً على الأولوية */
+.task-item.high { border-right-color: var(--priority-high); }
+.task-item.medium { border-right-color: var(--priority-medium); }
+.task-item.low { border-right-color: var(--priority-low); }
+
+/* ==========================================================================
+   7. تنسيق منطقة الرسم (Canvas Area)
+   ========================================================================== */
+.canvas-tools {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.canvas-wrapper {
+    background: #1e1e1e;                    /* خلفية لوحة الرسم */
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   8. تنسيق قسم النشر (Publish Actions)
+   ========================================================================== */
+.publish-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    color: #000;
+    font-weight: bold;
+}
