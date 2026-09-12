@@ -11,7 +11,7 @@
 </head>
 <body>
 
-   <!-- ==================== [ الشريط العلوي الحديث - Navbar ] ==================== -->
+ <!-- ==================== [ شريط أيقونات احترافي - Navbar ] ==================== -->
 <header class="navbar">
     <!-- شعار المنصة -->
     <div class="logo">
@@ -19,32 +19,27 @@
         <span>TalkSpace</span>
     </div>
 
-    <!-- أزرار التنقل السريع بين الأقسام الثلاثة -->
-    <nav class="nav-links">
-        <a href="#priority-section" class="nav-btn"><i class="fa-solid fa-list-check"></i> الأولويات</a>
-        <a href="#canvas-section" class="nav-btn"><i class="fa-solid fa-pen-ruler"></i> الرسم</a>
-        <a href="#publish-section" class="nav-btn"><i class="fa-solid fa-paper-plane"></i> النشر</a>
+    <!-- أزرار الأيقونات فقط للتنقل السريع -->
+    <nav class="nav-icons">
+        <a href="#priority-section" class="icon-btn" data-tooltip="الأولويات والمهام">
+            <i class="fa-solid fa-list-check"></i>
+        </a>
+        <a href="#canvas-section" class="icon-btn" data-tooltip="مساحة الرسم">
+            <i class="fa-solid fa-palette"></i>
+        </a>
+        <a href="#publish-section" class="icon-btn" data-tooltip="كتابة ونشر">
+            <i class="fa-solid fa-paper-plane"></i>
+        </a>
     </nav>
 
-    <!-- ملف المستخدم والحالة -->
-    <div class="user-profile-summary">
-        <div class="user-info">
-            <span class="username">مستخدم TalkSpace</span>
-            <span class="user-status"><i class="fa-solid fa-circle"></i> متصل</span>
-        </div>
-        <div class="avatar-wrapper">
-            <img id="avatar-img" src="https://via.placeholder.com/42" alt="صورة الحساب">
+    <!-- ملف المستخدم بالأيقونة والدائرة الضوئية -->
+    <div class="user-profile">
+        <span class="status-indicator" title="متصل"></span>
+        <div class="avatar-icon">
+            <i class="fa-solid fa-user"></i>
         </div>
     </div>
 </header>
-        
-        <!-- معلومات حساب المستخدم -->
-        <div class="user-profile-summary">
-            <span id="github-username">مستخدم TalkSpace</span>
-            <img id="avatar-img" src="https://via.placeholder.com/40" alt="صورة الحساب">
-        </div>
-    </header>
-
     <!-- ==================== [ محتوى اللوحة الرئيسية - Dashboard ] ==================== -->
     <main class="dashboard-container">
         
