@@ -1,1687 +1,1356 @@
 /* =========================================================
-   TALKSPACE
-   Vanilla JavaScript Application
+   TALKSPACE FOUNDATION 1.0
+   Central Application State
    ========================================================= */
 
+"use strict";
 
-/* ================= HELPERS ================= */
 
-const $ = (
-  selector,
-  root = document
-) => root.querySelector(selector);
+const App = {
 
+    /* =====================================================
+       STATE
+       ===================================================== */
 
-const $$ = (
-  selector,
-  root = document
-) => [
-  ...root.querySelectorAll(selector)
-];
+    state: {
 
+        theme: "dark",
 
-/* =========================================================
-   ARTICLES
-   ========================================================= */
+        colors: {
+            primary: "#0000ff",
+            cyan: "#00f2fe"
+        },
 
-const articles = [
+        blur: 20,
 
-  {
-    id: 1,
+        activeView: "home",
 
-    tag: "سوسيولوجيا",
+        captureType: "idea",
 
-    date: "12 سبتمبر 2026",
+        items: [],
 
-    title:
-      "لماذا أصبحت المساحة الرقمية جزءًا من هويتنا الاجتماعية؟",
+        activity: [
+            {
+                title: "مرحبًا بك في TalkSpace",
+                description: "تم إنشاء مساحة العمل",
+                time: "الآن"
+            }
+        ],
 
-    excerpt:
-      "منصات الحوار لم تعد مجرد أدوات اتصال؛ إنها بيئات تتشكل داخلها العادات واللغة والانتماءات.",
+        notifications: []
 
-    body:
-      "عندما ينتقل الحوار إلى مساحة رقمية، لا تنتقل الكلمات وحدها. تنتقل معها قواعد جديدة للانتباه، وطريقة مختلفة لبناء الثقة، وإيقاع أسرع لتكوين الانطباعات. لهذا أصبحت هندسة الواجهة نفسها جزءًا من التجربة الاجتماعية."
-  },
+    },
 
 
-  {
-    id: 2,
+    /* =====================================================
+       INIT
+       ===================================================== */
 
-    tag: "قيادة",
+    init() {
 
-    date: "09 سبتمبر 2026",
+        this.loadState();
 
-    title:
-      "القائد الذي يعرف متى يصمت يربح نصف المعركة",
+        this.applyTheme();
+        this.applyCustomization();
 
-    excerpt:
-      "الاستماع ليس غيابًا عن القيادة، بل واحدة من أكثر أدواتها فعالية عندما يصبح القرار معقدًا.",
+        this.bindEvents();
 
-    body:
-      "القيادة الحديثة لا تُقاس فقط بعدد القرارات التي يتخذها القائد، بل بجودة المساحة التي يصنعها كي تظهر المعلومات المهمة. الصمت هنا ليس ترددًا؛ إنه تقنية لجمع الإشارات قبل إطلاق الحكم."
-  },
+        this.render();
 
+        this.showToast(
+            "TalkSpace جاهز",
+            "مساحة العمل تعمل بشكل طبيعي."
+        );
 
-  {
-    id: 3,
+    },
 
-    tag: "تكنولوجيا",
 
-    date: "06 سبتمبر 2026",
+    /* =====================================================
+       STORAGE
+       ===================================================== */
 
-    title:
-      "الذكاء الاصطناعي لا يقتل الأفكار — لكنه يغيّر اقتصاد الانتباه",
+    saveState() {
 
-    excerpt:
-      "مع وفرة المحتوى المولّد، تصبح قيمة الفكرة مرتبطة أكثر بالاختيار والسياق والتحقق.",
+        try {
 
-    body:
-      "حين يصبح إنتاج المسودة شبه مجاني، ينتقل التحدي من الكتابة إلى التمييز. ما الذي يستحق النشر؟ ما الذي يحتاج مصدرًا؟ وما الذي يبدو ذكيًا فقط لأنه مصاغ بشكل جيد؟ المستقبل ليس لمن ينتج أكثر، بل لمن يختار أفضل."
-  },
+            localStorage.setItem(
+                "talkspace_foundation_state",
+                JSON.stringify(this.state)
+            );
 
+        } catch (error) {
 
-  {
-    id: 4,
+            console.warn(
+                "Could not save TalkSpace state.",
+                error
+            );
 
-    tag: "سوسيولوجيا",
+        }
 
-    date: "02 سبتمبر 2026",
+    },
 
-    title:
-      "هل نحتاج فعلًا إلى رأي في كل شيء؟",
 
-    excerpt:
-      "اقتصاد المنصات يكافئ سرعة التعليق، بينما التفكير الجيد يحتاج مساحة للتريث.",
+    loadState() {
 
-    body:
-      "هناك فرق بين المشاركة وبين الاستجابة التلقائية. كلما زادت سرعة المنصة، ازدادت قيمة القدرة على قول: لا أعرف بعد. هذه الجملة الصغيرة قد تكون من أكثر أدوات التفكير مقاومةً للضجيج."
-  },
+        try {
 
+            const saved =
+                localStorage.getItem(
+                    "talkspace_foundation_state"
+                );
 
-  {
-    id: 5,
+            if (!saved) return;
 
-    tag: "تكنولوجيا",
+            const parsed = JSON.parse(saved);
 
-    date: "29 أغسطس 2026",
-
-    title:
-      "من الشاشة إلى البيئة: كيف تتغير واجهات المستقبل؟",
-
-    excerpt:
-      "الواجهة القادمة لن تكون مجرد صفحات؛ ستكون طبقة ذكية تتفاعل مع السياق من حولنا.",
-
-    body:
-      "تصميم الواجهات يتجه نحو طبقات أكثر مرونة: بيانات، إشعارات، مساعدات وسياقات تظهر عند الحاجة وتختفي عندما تعيق التركيز."
-  },
-
-
-  {
-    id: 6,
-
-    tag: "قيادة",
-
-    date: "24 أغسطس 2026",
-
-    title:
-      "إدارة الأولويات ليست قائمة مهام طويلة",
-
-    excerpt:
-      "الأولوية الحقيقية هي قرار بشأن ما لن تفعله الآن بقدر ما هي قرار بشأن ما ستفعله.",
-
-    body:
-      "عندما تتحول كل مهمة إلى عاجلة، تتوقف كلمة أولوية عن أداء وظيفتها. لوحة بسيطة من ثلاث حالات تساعد على رؤية تدفق العمل: ما ينتظر، ما يتحرك، وما انتهى فعلًا."
-  }
-
-];
-
-
-/* =========================================================
-   TASKS
-   ========================================================= */
+            this.state = {
+                ...this.state,
+                ...parsed,
 
-let tasks = [
+                colors: {
+                    ...this.state.colors,
+                    ...(parsed.colors || {})
+                }
 
-  {
-    id: 101,
-    title: "صياغة فكرة العدد القادم",
-    desc: "تحويل الملاحظات المتفرقة إلى زاوية واضحة.",
-    priority: "high",
-    status: "todo"
-  },
+            };
 
-  {
-    id: 102,
-    title: "مراجعة مصادر مقال الذكاء الاصطناعي",
-    desc: "تدقيق الروابط والأرقام قبل النشر.",
-    priority: "high",
-    status: "doing"
-  },
+        } catch (error) {
 
-  {
-    id: 103,
-    title: "اختيار عنوان بديل",
-    desc: "اختبار 3 عناوين أكثر اختصارًا.",
-    priority: "medium",
-    status: "todo"
-  },
+            console.warn(
+                "Could not load TalkSpace state.",
+                error
+            );
 
-  {
-    id: 104,
-    title: "تصميم غلاف المقال",
-    desc: "نسخة Cyber Eye مع طبقة زجاجية.",
-    priority: "medium",
-    status: "doing"
-  },
+        }
 
-  {
-    id: 105,
-    title: "تحديث صفحة حول المنصة",
-    desc: "إضافة المبادئ التقنية.",
-    priority: "low",
-    status: "done"
-  },
+    },
 
-  {
-    id: 106,
-    title: "تنظيف قائمة الأفكار",
-    desc: "حذف التكرارات ودمج المتشابه.",
-    priority: "low",
-    status: "done"
-  },
 
-  {
-    id: 107,
-    title: "نشر المقال المختار",
-    desc: "المراجعة النهائية ثم الإطلاق.",
-    priority: "high",
-    status: "done"
-  },
+    /* =====================================================
+       EVENTS
+       ===================================================== */
 
-  {
-    id: 108,
-    title: "اختبار الهاتف",
-    desc: "فحص تجربة RTL على الشاشات الصغيرة.",
-    priority: "medium",
-    status: "todo"
-  }
+    bindEvents() {
 
-];
+        document.addEventListener(
+            "click",
+            (event) => this.handleClick(event)
+        );
 
 
-/* =========================================================
-   KANBAN COLUMNS
-   ========================================================= */
+        document.addEventListener(
+            "keydown",
+            (event) => this.handleKeyboard(event)
+        );
 
-const columns = [
 
-  {
-    id: "todo",
-    title: "قيد الانتظار"
-  },
+        /* Studio colors */
 
-  {
-    id: "doing",
-    title: "جاري العمل"
-  },
+        const primaryColor =
+            document.getElementById("primaryColor");
 
-  {
-    id: "done",
-    title: "تم الإنجاز"
-  }
+        const cyanColor =
+            document.getElementById("cyanColor");
 
-];
+        const blurRange =
+            document.getElementById("blurRange");
 
 
-/* =========================================================
-   SETTINGS
-   ========================================================= */
+        primaryColor?.addEventListener(
+            "input",
+            (event) => {
 
-const defaultSettings = {
+                this.state.colors.primary =
+                    event.target.value;
 
-  cyan: "#00f2fe",
+                document.getElementById(
+                    "primaryColorValue"
+                ).textContent =
+                    event.target.value;
 
-  blue: "#0000ff",
+                this.applyCustomization();
+                this.saveState();
 
-  blur: 18,
+            }
+        );
 
-  glass: 0.62,
 
-  bg: "deep",
+        cyanColor?.addEventListener(
+            "input",
+            (event) => {
 
-  light: false
+                this.state.colors.cyan =
+                    event.target.value;
+
+                document.getElementById(
+                    "cyanColorValue"
+                ).textContent =
+                    event.target.value;
+
+                this.applyCustomization();
+                this.saveState();
+
+            }
+        );
+
+
+        blurRange?.addEventListener(
+            "input",
+            (event) => {
+
+                this.state.blur =
+                    Number(event.target.value);
+
+                document.getElementById(
+                    "blurValue"
+                ).textContent =
+                    `${this.state.blur}px`;
+
+                this.applyCustomization();
+                this.saveState();
+
+            }
+        );
+
+
+        /* Capture type */
+
+        document
+            .querySelectorAll("[data-capture-type]")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const type =
+                            button.dataset.captureType;
+
+                        this.setCaptureType(type);
+
+                    }
+                );
+
+            });
+
+
+        /* Presets */
+
+        document
+            .querySelectorAll("[data-preset]")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        this.applyPreset(
+                            button.dataset.preset
+                        );
+
+                    }
+                );
+
+            });
+
+
+        /* Command search */
+
+        const commandInput =
+            document.getElementById("commandInput");
+
+        commandInput?.addEventListener(
+            "input",
+            () => this.filterCommands()
+        );
+
+
+        /* Close modal by background */
+
+        document
+            .getElementById("captureModal")
+            ?.addEventListener(
+                "click",
+                (event) => {
+
+                    if (
+                        event.target.id ===
+                        "captureModal"
+                    ) {
+
+                        this.closeCapture();
+
+                    }
+
+                }
+            );
+
+
+        /* Close command palette */
+
+        document
+            .getElementById("commandLayer")
+            ?.addEventListener(
+                "click",
+                (event) => {
+
+                    if (
+                        event.target.id ===
+                        "commandLayer"
+                    ) {
+
+                        this.closeCommand();
+
+                    }
+
+                }
+            );
+
+
+        /* Mobile overlay */
+
+        document
+            .getElementById("mobileOverlay")
+            ?.addEventListener(
+                "click",
+                () => this.closeSidebar()
+            );
+
+    },
+
+
+    /* =====================================================
+       CLICK HANDLER
+       ===================================================== */
+
+    handleClick(event) {
+
+        const viewButton =
+            event.target.closest("[data-view]");
+
+        if (viewButton) {
+
+            this.navigate(
+                viewButton.dataset.view
+            );
+
+            return;
+        }
+
+
+        const actionButton =
+            event.target.closest("[data-action]");
+
+        if (actionButton) {
+
+            this.handleAction(
+                actionButton.dataset.action,
+                actionButton
+            );
+
+            return;
+        }
+
+
+        const commandView =
+            event.target.closest(
+                "[data-command-view]"
+            );
+
+        if (commandView) {
+
+            this.navigate(
+                commandView.dataset.commandView
+            );
+
+            this.closeCommand();
+
+            return;
+        }
+
+
+        const commandAction =
+            event.target.closest(
+                "[data-command-action]"
+            );
+
+        if (commandAction) {
+
+            this.handleAction(
+                commandAction.dataset.commandAction
+            );
+
+            this.closeCommand();
+
+            return;
+        }
+
+    },
+
+
+    /* =====================================================
+       ACTIONS
+       ===================================================== */
+
+    handleAction(action, element = null) {
+
+        switch (action) {
+
+            case "go-home":
+                this.navigate("home");
+                break;
+
+
+            case "explore":
+                this.navigate("explore");
+                break;
+
+
+            case "capture":
+
+                this.openCapture(
+                    element?.dataset.type ||
+                    "idea"
+                );
+
+                break;
+
+
+            case "save-capture":
+                this.saveCapture();
+                break;
+
+
+            case "close-capture":
+                this.closeCapture();
+                break;
+
+
+            case "notifications":
+                this.openNotifications();
+                break;
+
+
+            case "close-notifications":
+                this.closeNotifications();
+                break;
+
+
+            case "studio":
+                this.openStudio();
+                break;
+
+
+            case "close-studio":
+                this.closeStudio();
+                break;
+
+
+            case "theme":
+                this.toggleTheme();
+                break;
+
+
+            case "command":
+                this.openCommand();
+                break;
+
+
+            case "toggle-sidebar":
+                this.toggleSidebar();
+                break;
+
+
+            case "focus":
+                this.focusMode();
+                break;
+
+
+            case "new-task":
+                this.openCapture("task");
+                break;
+
+
+            case "activity":
+                this.showToast(
+                    "النشاط",
+                    "سيتم تطوير سجل النشاطات في المرحلة القادمة."
+                );
+                break;
+
+
+            case "profile":
+                this.showToast(
+                    "مساحة العمل",
+                    "إعدادات الحساب المحلي ستضاف لاحقًا."
+                );
+                break;
+
+
+            case "reset-settings":
+                this.resetSettings();
+                break;
+
+
+            default:
+
+                this.showToast(
+                    "غير متاح",
+                    "هذه الوظيفة ستضاف في مرحلة لاحقة."
+                );
+
+        }
+
+    },
+
+
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
+
+    navigate(view) {
+
+        const target =
+            document.getElementById(
+                `view-${view}`
+            );
+
+        if (!target) return;
+
+
+        document
+            .querySelectorAll(".view")
+            .forEach(section => {
+
+                section.classList.remove("active");
+
+            });
+
+
+        target.classList.add("active");
+
+
+        document
+            .querySelectorAll(".nav-item")
+            .forEach(button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.view === view
+                );
+
+            });
+
+
+        this.state.activeView = view;
+
+
+        const titles = {
+
+            home: "الرئيسية",
+            explore: "استكشف",
+            articles: "المقالات",
+            ideas: "الأفكار",
+            tasks: "المهام",
+            spaces: "المساحات",
+            knowledge: "شبكة المعرفة"
+
+        };
+
+
+        document.getElementById(
+            "pageTitle"
+        ).textContent =
+            titles[view] || "TalkSpace";
+
+
+        this.saveState();
+
+        this.closeSidebar();
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    },
+
+
+    /* =====================================================
+       CAPTURE
+       ===================================================== */
+
+    openCapture(type = "idea") {
+
+        this.setCaptureType(type);
+
+        const modal =
+            document.getElementById(
+                "captureModal"
+            );
+
+        modal.classList.add("open");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        setTimeout(() => {
+
+            document
+                .getElementById("captureInput")
+                ?.focus();
+
+        }, 100);
+
+    },
+
+
+    closeCapture() {
+
+        const modal =
+            document.getElementById(
+                "captureModal"
+            );
+
+        modal.classList.remove("open");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.getElementById(
+            "captureInput"
+        ).value = "";
+
+        document.getElementById(
+            "captureDetails"
+        ).value = "";
+
+    },
+
+
+    setCaptureType(type) {
+
+        const allowed = [
+            "idea",
+            "article",
+            "task",
+            "note"
+        ];
+
+
+        if (!allowed.includes(type)) {
+
+            type = "idea";
+
+        }
+
+
+        this.state.captureType = type;
+
+
+        document
+            .querySelectorAll(
+                "[data-capture-type]"
+            )
+            .forEach(button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.captureType === type
+                );
+
+            });
+
+
+        const titles = {
+
+            idea: "التقاط فكرة",
+            article: "مقال جديد",
+            task: "مهمة جديدة",
+            note: "ملاحظة جديدة"
+
+        };
+
+
+        document.getElementById(
+            "captureTitle"
+        ).textContent =
+            titles[type];
+
+    },
+
+
+    saveCapture() {
+
+        const title =
+            document.getElementById(
+                "captureInput"
+            ).value.trim();
+
+
+        const details =
+            document.getElementById(
+                "captureDetails"
+            ).value.trim();
+
+
+        if (!title) {
+
+            this.showToast(
+                "أحتاج عنوانًا",
+                "اكتب عنوانًا قبل الحفظ."
+            );
+
+            document
+                .getElementById(
+                    "captureInput"
+                )
+                .focus();
+
+            return;
+
+        }
+
+
+        const item = {
+
+            id: Date.now(),
+
+            type: this.state.captureType,
+
+            title,
+
+            details,
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+
+        this.state.items.unshift(item);
+
+
+        this.addActivity(
+            title,
+            this.state.captureType
+        );
+
+
+        this.saveState();
+
+        this.closeCapture();
+
+        this.showToast(
+            "تم الحفظ",
+            `${this.getTypeName(
+                this.state.captureType
+            )} أضيفت إلى مساحة العمل.`
+        );
+
+    },
+
+
+    getTypeName(type) {
+
+        const names = {
+
+            idea: "الفكرة",
+            article: "المقال",
+            task: "المهمة",
+            note: "الملاحظة"
+
+        };
+
+        return names[type] || "العنصر";
+
+    },
+
+
+    /* =====================================================
+       ACTIVITY
+       ===================================================== */
+
+    addActivity(title, type) {
+
+        this.state.activity.unshift({
+
+            title:
+                `${this.getTypeName(type)}: ${title}`,
+
+            description:
+                "تمت إضافته إلى مساحة العمل",
+
+            time: "الآن"
+
+        });
+
+
+        this.state.activity =
+            this.state.activity.slice(0, 6);
+
+
+        this.renderActivity();
+
+    },
+
+
+    renderActivity() {
+
+        const container =
+            document.getElementById(
+                "activityList"
+            );
+
+        if (!container) return;
+
+
+        container.innerHTML =
+            this.state.activity
+                .map(item => `
+
+                    <div class="activity-item">
+
+                        <span class="activity-dot"></span>
+
+                        <div>
+
+                            <strong>
+                                ${this.escapeHTML(item.title)}
+                            </strong>
+
+                            <small>
+                                ${this.escapeHTML(item.description)}
+                            </small>
+
+                        </div>
+
+                        <time>
+                            ${this.escapeHTML(item.time)}
+                        </time>
+
+                    </div>
+
+                `)
+                .join("");
+
+    },
+
+
+    /* =====================================================
+       NOTIFICATIONS
+       ===================================================== */
+
+    openNotifications() {
+
+        const panel =
+            document.getElementById(
+                "notificationPanel"
+            );
+
+        panel.classList.add("open");
+
+        this.showToast(
+            "الإشعارات",
+            "لا توجد إشعارات جديدة."
+        );
+
+    },
+
+
+    closeNotifications() {
+
+        document
+            .getElementById(
+                "notificationPanel"
+            )
+            .classList.remove("open");
+
+    },
+
+
+    /* =====================================================
+       STUDIO
+       ===================================================== */
+
+    openStudio() {
+
+        document
+            .getElementById(
+                "studioPanel"
+            )
+            .classList.add("open");
+
+    },
+
+
+    closeStudio() {
+
+        document
+            .getElementById(
+                "studioPanel"
+            )
+            .classList.remove("open");
+
+    },
+
+
+    applyCustomization() {
+
+        document.documentElement.style.setProperty(
+            "--primary",
+            this.state.colors.primary
+        );
+
+        document.documentElement.style.setProperty(
+            "--cyan",
+            this.state.colors.cyan
+        );
+
+        document.documentElement.style.setProperty(
+            "--blur",
+            `${this.state.blur}px`
+        );
+
+
+        const primary =
+            document.getElementById(
+                "primaryColor"
+            );
+
+        const cyan =
+            document.getElementById(
+                "cyanColor"
+            );
+
+        const blur =
+            document.getElementById(
+                "blurRange"
+            );
+
+
+        if (primary) {
+
+            primary.value =
+                this.state.colors.primary;
+
+            document.getElementById(
+                "primaryColorValue"
+            ).textContent =
+                this.state.colors.primary;
+
+        }
+
+
+        if (cyan) {
+
+            cyan.value =
+                this.state.colors.cyan;
+
+            document.getElementById(
+                "cyanColorValue"
+            ).textContent =
+                this.state.colors.cyan;
+
+        }
+
+
+        if (blur) {
+
+            blur.value =
+                this.state.blur;
+
+            document.getElementById(
+                "blurValue"
+            ).textContent =
+                `${this.state.blur}px`;
+
+        }
+
+    },
+
+
+    applyPreset(preset) {
+
+        const presets = {
+
+            cyber: {
+                primary: "#0000ff",
+                cyan: "#00f2fe",
+                blur: 20
+            },
+
+            midnight: {
+                primary: "#5b5cff",
+                cyan: "#8b9cff",
+                blur: 28
+            },
+
+            minimal: {
+                primary: "#2563eb",
+                cyan: "#38bdf8",
+                blur: 14
+            }
+
+        };
+
+
+        const selected =
+            presets[preset];
+
+        if (!selected) return;
+
+
+        this.state.colors.primary =
+            selected.primary;
+
+        this.state.colors.cyan =
+            selected.cyan;
+
+        this.state.blur =
+            selected.blur;
+
+
+        this.applyCustomization();
+
+        this.saveState();
+
+
+        this.showToast(
+            "تم تغيير الهوية",
+            `تم تطبيق Preset: ${preset}.`
+        );
+
+    },
+
+
+    resetSettings() {
+
+        const confirmed =
+            confirm(
+                "هل تريد إعادة إعدادات TalkSpace الافتراضية؟"
+            );
+
+
+        if (!confirmed) return;
+
+
+        this.state.theme = "dark";
+
+        this.state.colors.primary =
+            "#0000ff";
+
+        this.state.colors.cyan =
+            "#00f2fe";
+
+        this.state.blur = 20;
+
+
+        this.applyTheme();
+        this.applyCustomization();
+
+        this.saveState();
+
+
+        this.showToast(
+            "تمت الإعادة",
+            "عادت الهوية إلى الإعدادات الافتراضية."
+        );
+
+    },
+
+
+    /* =====================================================
+       THEME
+       ===================================================== */
+
+    toggleTheme() {
+
+        this.state.theme =
+            this.state.theme === "dark"
+                ? "light"
+                : "dark";
+
+
+        this.applyTheme();
+
+        this.saveState();
+
+
+        this.showToast(
+            "المظهر",
+            this.state.theme === "dark"
+                ? "تم تفعيل الوضع الداكن."
+                : "تم تفعيل الوضع الفاتح."
+        );
+
+    },
+
+
+    applyTheme() {
+
+        document.body.classList.toggle(
+            "light",
+            this.state.theme === "light"
+        );
+
+
+        const button =
+            document.getElementById(
+                "themeButton"
+            );
+
+
+        if (button) {
+
+            button.textContent =
+                this.state.theme === "dark"
+                    ? "☾"
+                    : "☀";
+
+        }
+
+    },
+
+
+    /* =====================================================
+       COMMAND PALETTE
+       ===================================================== */
+
+    openCommand() {
+
+        const layer =
+            document.getElementById(
+                "commandLayer"
+            );
+
+        layer.classList.add("open");
+
+
+        const input =
+            document.getElementById(
+                "commandInput"
+            );
+
+        input.value = "";
+
+        this.filterCommands();
+
+
+        setTimeout(
+            () => input.focus(),
+            100
+        );
+
+    },
+
+
+    closeCommand() {
+
+        document
+            .getElementById(
+                "commandLayer"
+            )
+            .classList.remove("open");
+
+    },
+
+
+    filterCommands() {
+
+        const input =
+            document.getElementById(
+                "commandInput"
+            );
+
+        const query =
+            input.value
+                .trim()
+                .toLowerCase();
+
+
+        document
+            .querySelectorAll(
+                "#commandList button"
+            )
+            .forEach(button => {
+
+                const text =
+                    button.textContent
+                        .toLowerCase();
+
+                button.style.display =
+                    text.includes(query)
+                        ? "flex"
+                        : "none";
+
+            });
+
+    },
+
+
+    /* =====================================================
+       MOBILE
+       ===================================================== */
+
+    toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList.toggle("open");
+
+        document
+            .getElementById("mobileOverlay")
+            .classList.toggle("open");
+
+    },
+
+
+    closeSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList.remove("open");
+
+        document
+            .getElementById("mobileOverlay")
+            .classList.remove("open");
+
+    },
+
+
+    /* =====================================================
+       FOCUS MODE
+       ===================================================== */
+
+    focusMode() {
+
+        this.showToast(
+            "Focus Mode",
+            "وضع التركيز الكامل سيضاف في المرحلة التالية."
+        );
+
+    },
+
+
+    /* =====================================================
+       KEYBOARD
+       ===================================================== */
+
+    handleKeyboard(event) {
+
+        /* ESC */
+
+        if (event.key === "Escape") {
+
+            this.closeCapture();
+            this.closeCommand();
+            this.closeNotifications();
+            this.closeStudio();
+            this.closeSidebar();
+
+            return;
+
+        }
+
+
+        /* CTRL + K / CMD + K */
+
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+        ) {
+
+            event.preventDefault();
+
+            this.openCommand();
+
+        }
+
+    },
+
+
+    /* =====================================================
+       RENDER
+       ===================================================== */
+
+    render() {
+
+        this.navigate(
+            this.state.activeView || "home"
+        );
+
+        this.renderActivity();
+
+    },
+
+
+    /* =====================================================
+       TOAST
+       ===================================================== */
+
+    showToast(title, message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        document.getElementById(
+            "toastTitle"
+        ).textContent = title;
+
+        document.getElementById(
+            "toastMessage"
+        ).textContent = message;
+
+
+        toast.classList.add("show");
+
+
+        clearTimeout(
+            this.toastTimer
+        );
+
+
+        this.toastTimer =
+            setTimeout(() => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            }, 3200);
+
+    },
+
+
+    /* =====================================================
+       SECURITY
+       ===================================================== */
+
+    escapeHTML(value) {
+
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
 
 };
 
 
-let settings =
-  JSON.parse(
-    localStorage.getItem(
-      "talkspace-settings"
-    ) || "null"
-  )
-  ||
-  {
-    ...defaultSettings
-  };
-
-
 /* =========================================================
-   SAVE SETTINGS
-   ========================================================= */
-
-function saveSettings() {
-
-  localStorage.setItem(
-    "talkspace-settings",
-    JSON.stringify(settings)
-  );
-
-}
-
-
-/* =========================================================
-   APPLY SETTINGS
-   ========================================================= */
-
-function applySettings() {
-
-  const root =
-    document.documentElement;
-
-
-  root.style.setProperty(
-    "--cyan",
-    settings.cyan
-  );
-
-
-  root.style.setProperty(
-    "--blue",
-    settings.blue
-  );
-
-
-  root.style.setProperty(
-    "--blur",
-    settings.blur + "px"
-  );
-
-
-  root.style.setProperty(
-    "--glass-alpha",
-    settings.glass
-  );
-
-
-  const backgrounds = {
-
-    deep: [
-      "#06090f",
-      "#0a101b"
-    ],
-
-    blue: [
-      "#07112b",
-      "#0b1838"
-    ],
-
-    violet: [
-      "#12091d",
-      "#1b0c2a"
-    ],
-
-    light: [
-      "#edf5f8",
-      "#dcebf0"
-    ]
-
-  };
-
-
-  const [
-    backgroundOne,
-    backgroundTwo
-  ] =
-    backgrounds[settings.bg]
-    ||
-    backgrounds.deep;
-
-
-  root.style.setProperty(
-    "--bg",
-    backgroundOne
-  );
-
-
-  root.style.setProperty(
-    "--bg2",
-    backgroundTwo
-  );
-
-
-  document.body.classList.toggle(
-    "light",
-    settings.light ||
-    settings.bg === "light"
-  );
-
-
-  $("#cyanPicker").value =
-    settings.cyan;
-
-
-  $("#bluePicker").value =
-    settings.blue;
-
-
-  $("#blurRange").value =
-    settings.blur;
-
-
-  $("#glassRange").value =
-    settings.glass;
-
-
-  $("#cyanValue").textContent =
-    settings.cyan.toUpperCase();
-
-
-  $("#blueValue").textContent =
-    settings.blue.toUpperCase();
-
-
-  $("#blurValue").textContent =
-    settings.blur + "px";
-
-
-  $("#glassValue").textContent =
-    Number(settings.glass).toFixed(2);
-
-
-  $$(".bg-option").forEach(
-    button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.bg === settings.bg
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-
-function toast(message) {
-
-  const element =
-    document.createElement("div");
-
-
-  element.className = "toast";
-
-
-  element.innerHTML = `
-    <i></i>
-    <span>${message}</span>
-  `;
-
-
-  $("#toastStack")
-    .appendChild(element);
-
-
-  setTimeout(() => {
-
-    element.style.opacity = "0";
-
-    element.style.transform =
-      "translateY(8px)";
-
-
-    setTimeout(
-      () => element.remove(),
-      250
-    );
-
-  }, 2800);
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-function navigate(view) {
-
-  const viewId =
-    `view-${view}`;
-
-
-  $$(".view").forEach(
-    currentView => {
-
-      currentView.classList.toggle(
-        "active",
-        currentView.id === viewId
-      );
-
-    }
-  );
-
-
-  $$(".nav-link").forEach(
-    nav => {
-
-      nav.classList.toggle(
-        "active",
-        nav.dataset.nav === view
-      );
-
-    }
-  );
-
-
-  history.replaceState(
-    null,
-    "",
-    `#${view}`
-  );
-
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-
-  if (view === "articles") {
-
-    renderArticles(
-      currentFilter
-    );
-
-  }
-
-
-  if (view === "board") {
-
-    renderBoard();
-
-  }
-
-}
-
-
-/* =========================================================
-   ARTICLE CARD
-   ========================================================= */
-
-function articleCard(article) {
-
-  return `
-
-    <article class="article-card">
-
-      <div class="article-top">
-
-        <span class="tag">
-          ${article.tag}
-        </span>
-
-        <span class="article-index">
-          0${article.id}
-        </span>
-
-      </div>
-
-
-      <h3>
-        ${article.title}
-      </h3>
-
-
-      <p>
-        ${article.excerpt}
-      </p>
-
-
-      <div class="article-meta">
-
-        <span>
-          ${article.date}
-        </span>
-
-        <button
-          class="read-btn"
-          data-read="${article.id}"
-        >
-          قراءة المقال كاملاً ↗
-        </button>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   FEATURED
-   ========================================================= */
-
-function renderFeatured() {
-
-  $("#featuredGrid").innerHTML =
-    articles
-      .slice(0, 3)
-      .map(articleCard)
-      .join("");
-
-}
-
-
-/* =========================================================
-   ARTICLES FILTER
-   ========================================================= */
-
-let currentFilter = "all";
-
-
-function renderArticles(
-  filter = "all"
-) {
-
-  currentFilter = filter;
-
-
-  const list =
-    filter === "all"
-      ? articles
-      : articles.filter(
-          article =>
-            article.tag === filter
-        );
-
-
-  $("#articlesGrid").innerHTML =
-    list
-      .map(articleCard)
-      .join("");
-
-
-  $$(".filter-btn").forEach(
-    button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.filter === filter
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   OPEN ARTICLE
-   ========================================================= */
-
-function openArticle(id) {
-
-  const article =
-    articles.find(
-      item =>
-        item.id === Number(id)
-    );
-
-
-  if (!article) return;
-
-
-  $("#modalTag").textContent =
-    article.tag.toUpperCase();
-
-
-  $("#modalTitle").textContent =
-    article.title;
-
-
-  $("#modalDate").textContent =
-    article.date;
-
-
-  $("#modalBody").textContent =
-    article.body;
-
-
-  $("#articleModal")
-    .classList.add("open");
-
-
-  $("#articleModal")
-    .setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-}
-
-
-/* =========================================================
-   CLOSE ARTICLE
-   ========================================================= */
-
-function closeArticle() {
-
-  $("#articleModal")
-    .classList.remove("open");
-
-
-  $("#articleModal")
-    .setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-}
-
-
-/* =========================================================
-   TASK PRIORITY LABEL
-   ========================================================= */
-
-function taskPriority(priority) {
-
-  if (priority === "high")
-    return "عالية";
-
-  if (priority === "medium")
-    return "متوسطة";
-
-  return "منخفضة";
-
-}
-
-
-/* =========================================================
-   MINI BOARD
-   ========================================================= */
-
-function renderMiniBoard() {
-
-  $("#miniBoard").innerHTML =
-    columns.map(column => {
-
-      const columnTasks =
-        tasks.filter(
-          task =>
-            task.status === column.id
-        );
-
-
-      return `
-
-        <div class="mini-column">
-
-          <h4>
-
-            ${column.title}
-
-            <span class="column-count">
-              (${columnTasks.length})
-            </span>
-
-          </h4>
-
-
-          ${
-            columnTasks
-              .slice(0, 3)
-              .map(
-                task =>
-                  `<div class="mini-task">
-                    ${task.title}
-                  </div>`
-              )
-              .join("")
-          }
-
-
-          ${
-            columnTasks.length === 0
-              ? `
-                <div class="mini-task">
-                  لا توجد مهام
-                </div>
-              `
-              : ""
-          }
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* =========================================================
-   TASK CARD
-   ========================================================= */
-
-function taskCard(task) {
-
-  return `
-
-    <article
-      class="task-card"
-      draggable="true"
-      data-task="${task.id}"
-    >
-
-      <span
-        class="priority ${task.priority}"
-      >
-        ${taskPriority(task.priority)}
-      </span>
-
-
-      <h4>
-        ${task.title}
-      </h4>
-
-
-      <p>
-        ${task.desc || ""}
-      </p>
-
-
-      <div class="task-actions">
-
-        <button
-          data-move="${task.id}"
-        >
-          نقل →
-        </button>
-
-        <button
-          data-delete="${task.id}"
-        >
-          حذف
-        </button>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   RENDER KANBAN
-   ========================================================= */
-
-function renderBoard() {
-
-  $("#kanbanBoard").innerHTML =
-    columns.map(column => {
-
-      const list =
-        tasks.filter(
-          task =>
-            task.status === column.id
-        );
-
-
-      return `
-
-        <section
-          class="board-column"
-          data-status="${column.id}"
-        >
-
-          <div class="column-head">
-
-            <div class="column-title">
-
-              <span class="column-dot"></span>
-
-              ${column.title}
-
-            </div>
-
-
-            <span class="column-count">
-
-              ${String(list.length)
-                .padStart(2, "0")}
-
-            </span>
-
-          </div>
-
-
-          <div
-            class="task-list"
-            data-drop="${column.id}"
-          >
-
-            ${list
-              .map(taskCard)
-              .join("")}
-
-          </div>
-
-        </section>
-
-      `;
-
-    }).join("");
-
-
-  bindDrag();
-
-
-  updateStats();
-
-}
-
-
-/* =========================================================
-   UPDATE STATS
-   ========================================================= */
-
-function updateStats() {
-
-  $("#statArticles")
-    .textContent =
-    String(
-      articles.length
-    ).padStart(2, "0");
-
-
-  $("#statIdeas")
-    .textContent =
-    String(
-      tasks.filter(
-        task =>
-          task.status !== "done"
-      ).length
-    ).padStart(2, "0");
-
-
-  $("#statDone")
-    .textContent =
-    String(
-      tasks.filter(
-        task =>
-          task.status === "done"
-      ).length
-    ).padStart(2, "0");
-
-}
-
-
-/* =========================================================
-   DRAG AND DROP
-   ========================================================= */
-
-function bindDrag() {
-
-  $$(".task-card").forEach(
-    card => {
-
-      card.addEventListener(
-        "dragstart",
-        () => {
-
-          card.classList.add(
-            "dragging"
-          );
-
-        }
-      );
-
-
-      card.addEventListener(
-        "dragend",
-        () => {
-
-          card.classList.remove(
-            "dragging"
-          );
-
-
-          $$(".task-list")
-            .forEach(zone => {
-
-              zone.classList.remove(
-                "drop-active"
-              );
-
-            });
-
-        }
-      );
-
-    }
-  );
-
-
-  $$(".task-list").forEach(
-    zone => {
-
-      zone.addEventListener(
-        "dragover",
-        event => {
-
-          event.preventDefault();
-
-          zone.classList.add(
-            "drop-active"
-          );
-
-        }
-      );
-
-
-      zone.addEventListener(
-        "dragleave",
-        () => {
-
-          zone.classList.remove(
-            "drop-active"
-          );
-
-        }
-      );
-
-
-      zone.addEventListener(
-        "drop",
-        event => {
-
-          event.preventDefault();
-
-
-          zone.classList.remove(
-            "drop-active"
-          );
-
-
-          const card =
-            $(".task-card.dragging");
-
-
-          if (!card) return;
-
-
-          const taskId =
-            Number(
-              card.dataset.task
-            );
-
-
-          const targetStatus =
-            zone.dataset.drop;
-
-
-          const task =
-            tasks.find(
-              item =>
-                item.id === taskId
-            );
-
-
-          if (
-            task &&
-            task.status !== targetStatus
-          ) {
-
-            task.status =
-              targetStatus;
-
-
-            persistTasks();
-
-            renderBoard();
-
-            renderMiniBoard();
-
-            toast(
-              "تم نقل المهمة بنجاح ✦"
-            );
-
-          }
-
-        }
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   LOCAL STORAGE TASKS
-   ========================================================= */
-
-function persistTasks() {
-
-  localStorage.setItem(
-    "talkspace-tasks",
-    JSON.stringify(tasks)
-  );
-
-}
-
-
-const storedTasks =
-  JSON.parse(
-    localStorage.getItem(
-      "talkspace-tasks"
-    ) || "null"
-  );
-
-
-if (
-  Array.isArray(storedTasks)
-) {
-
-  tasks = storedTasks;
-
-}
-
-
-/* =========================================================
-   TASK MODAL
-   ========================================================= */
-
-function openTask() {
-
-  $("#taskModal")
-    .classList.add("open");
-
-
-  $("#taskTitle").focus();
-
-}
-
-
-function closeTask() {
-
-  $("#taskModal")
-    .classList.remove("open");
-
-}
-
-
-/* =========================================================
-   GLOBAL CLICK EVENTS
+   START APP
    ========================================================= */
 
 document.addEventListener(
-  "click",
-  event => {
-
-
-    /* NAVIGATION */
-
-    const nav =
-      event.target.closest(
-        "[data-nav]"
-      );
-
-
-    if (nav) {
-
-      event.preventDefault();
-
-      navigate(
-        nav.dataset.nav
-      );
-
-      return;
-
-    }
-
-
-    /* ARTICLE */
-
-    const read =
-      event.target.closest(
-        "[data-read]"
-      );
-
-
-    if (read) {
-
-      openArticle(
-        read.dataset.read
-      );
-
-      return;
-
-    }
-
-
-    /* CLOSE ARTICLE */
-
-    const closeModal =
-      event.target.closest(
-        "[data-close-modal]"
-      );
-
-
-    if (closeModal) {
-
-      closeArticle();
-
-      return;
-
-    }
-
-
-    /* CLOSE TASK */
-
-    const closeTaskButton =
-      event.target.closest(
-        "[data-close-task]"
-      );
-
-
-    if (closeTaskButton) {
-
-      closeTask();
-
-      return;
-
-    }
-
-
-    /* MOVE TASK */
-
-    const move =
-      event.target.closest(
-        "[data-move]"
-      );
-
-
-    if (move) {
-
-      const task =
-        tasks.find(
-          item =>
-            item.id ===
-            Number(
-              move.dataset.move
-            )
-        );
-
-
-      if (!task) return;
-
-
-      const currentIndex =
-        columns.findIndex(
-          column =>
-            column.id ===
-            task.status
-        );
-
-
-      task.status =
-        columns[
-          (currentIndex + 1)
-          % columns.length
-        ].id;
-
-
-      persistTasks();
-
-      renderBoard();
-
-      renderMiniBoard();
-
-      toast(
-        "تم تحريك المهمة إلى الحالة التالية"
-      );
-
-      return;
-
-    }
-
-
-    /* DELETE TASK */
-
-    const deleteButton =
-      event.target.closest(
-        "[data-delete]"
-      );
-
-
-    if (deleteButton) {
-
-      tasks =
-        tasks.filter(
-          task =>
-            task.id !==
-            Number(
-              deleteButton.dataset.delete
-            )
-        );
-
-
-      persistTasks();
-
-      renderBoard();
-
-      renderMiniBoard();
-
-      toast(
-        "تم حذف المهمة"
-      );
-
-      return;
-
-    }
-
-  }
+    "DOMContentLoaded",
+    () => App.init()
 );
-
-
-/* =========================================================
-   ARTICLE FILTERS
-   ========================================================= */
-
-$$(".filter-btn")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        renderArticles(
-          button.dataset.filter
-        );
-
-      }
-    );
-
-  });
-
-
-/* =========================================================
-   DARK / LIGHT MODE
-   ========================================================= */
-
-$("#themeBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      settings.light =
-        !document.body.classList.contains(
-          "light"
-        );
-
-
-      settings.bg =
-        settings.light
-          ? "light"
-          : "deep";
-
-
-      saveSettings();
-
-      applySettings();
-
-
-      toast(
-        settings.light
-          ? "تم تفعيل الوضع النهاري ☀"
-          : "تم تفعيل الوضع الداكن ◐"
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   NOTIFICATIONS
-   ========================================================= */
-
-$("#notifyBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      toast(
-        "لا توجد إشعارات جديدة — كل شيء تحت السيطرة ✦"
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   STUDIO
-   ========================================================= */
-
-$("#studioBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      $("#studioDrawer")
-        .classList.add("open");
-
-    }
-  );
-
-
-$("#closeStudio")
-  .addEventListener(
-    "click",
-    closeStudio
-  );
-
-
-$("#drawerBackdrop")
-  .addEventListener(
-    "click",
-    closeStudio
-  );
-
-
-function closeStudio() {
-
-  $("#studioDrawer")
-    .classList.remove("open");
-
-}
-
-
-/* =========================================================
-   COLOR CONTROLS
-   ========================================================= */
-
-$("#cyanPicker")
-  .addEventListener(
-    "input",
-    event => {
-
-      settings.cyan =
-        event.target.value;
-
-      saveSettings();
-
-      applySettings();
-
-    }
-  );
-
-
-$("#bluePicker")
-  .addEventListener(
-    "input",
-    event => {
-
-      settings.blue =
-        event.target.value;
-
-      saveSettings();
-
-      applySettings();
-
-    }
-  );
-
-
-/* =========================================================
-   RANGE CONTROLS
-   ========================================================= */
-
-$("#blurRange")
-  .addEventListener(
-    "input",
-    event => {
-
-      settings.blur =
-        event.target.value;
-
-      saveSettings();
-
-      applySettings();
-
-    }
-  );
-
-
-$("#glassRange")
-  .addEventListener(
-    "input",
-    event => {
-
-      settings.glass =
-        event.target.value;
-
-      saveSettings();
-
-      applySettings();
-
-    }
-  );
-
-
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
-
-$$(".bg-option")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        settings.bg =
-          button.dataset.bg;
-
-
-        settings.light =
-          settings.bg === "light";
-
-
-        saveSettings();
-
-        applySettings();
-
-
-        toast(
-          `تم تغيير الخلفية إلى ${button.textContent}`
-        );
-
-      }
-    );
-
-  });
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-$("#resetSettings")
-  .addEventListener(
-    "click",
-    () => {
-
-      settings = {
-        ...defaultSettings
-      };
-
-
-      saveSettings();
-
-      applySettings();
-
-
-      toast(
-        "تمت إعادة الهوية إلى الإعدادات الأصلية"
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   ADD TASK
-   ========================================================= */
-
-$("#addTaskTop")
-  .addEventListener(
-    "click",
-    openTask
-  );
-
-
-$("#taskForm")
-  .addEventListener(
-    "submit",
-    event => {
-
-      event.preventDefault();
-
-
-      tasks.unshift({
-
-        id: Date.now(),
-
-        title:
-          $("#taskTitle")
-            .value
-            .trim(),
-
-        desc:
-          $("#taskDescription")
-            .value
-            .trim(),
-
-        priority:
-          $("#taskPriority")
-            .value,
-
-        status:
-          $("#taskStatus")
-            .value
-
-      });
-
-
-      persistTasks();
-
-      renderBoard();
-
-      renderMiniBoard();
-
-      closeTask();
-
-
-      event.target.reset();
-
-
-      toast(
-        "تمت إضافة المهمة إلى اللوحة ✦"
-      );
-
-    }
-  );
-
-
-/* =========================================================
-   ESC KEY
-   ========================================================= */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (event.key === "Escape") {
-
-      closeArticle();
-
-      closeTask();
-
-      closeStudio();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   BROWSER HISTORY
-   ========================================================= */
-
-window.addEventListener(
-  "popstate",
-  () => {
-
-    navigate(
-      location.hash.slice(1)
-      || "home"
-    );
-
-  }
-);
-
-
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
-
-renderFeatured();
-
-renderArticles();
-
-renderBoard();
-
-renderMiniBoard();
-
-updateStats();
-
-applySettings();
-
-
-const initialView =
-  location.hash.slice(1);
-
-
-if (
-  [
-    "home",
-    "articles",
-    "board",
-    "about"
-  ].includes(initialView)
-) {
-
-  navigate(initialView);
-
-}
