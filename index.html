@@ -503,22 +503,34 @@
 
 
             <div class="view" id="view-ideas">
-                <div class="page-intro">
-                    <span class="section-kicker">IDEAS</span>
-                    <h1>الأفكار</h1>
-                    <p>المكان الذي تبدأ فيه الأشياء الكبيرة.</p>
-                </div>
+                <div class="ideas-head">
+                    <div class="page-intro">
+                        <span class="section-kicker">IDEAS ENGINE</span>
+                        <h1>الأفكار</h1>
+                        <p>المكان الذي تبدأ فيه الأشياء الكبيرة — التقطها، طوّرها، ثم حوّلها إلى عمل.</p>
+                    </div>
 
-                <div class="empty-state">
-                    <div class="empty-icon">✦</div>
-                    <h2>صندوق الأفكار فارغ</h2>
-                    <p>لا تدع الفكرة الجميلة تضيع. التقطها الآن.</p>
-                    <button class="primary-button"
-                            data-action="capture"
-                            data-type="idea">
+                    <button class="primary-button" data-action="capture" data-type="idea">
                         ＋ فكرة جديدة
                     </button>
                 </div>
+
+                <section class="ideas-toolbar">
+                    <div class="ideas-search">
+                        <span>⌕</span>
+                        <input id="ideasSearch" type="search" placeholder="ابحث في أفكارك..." autocomplete="off">
+                    </div>
+
+                    <div class="idea-filters" role="tablist" aria-label="تصفية الأفكار">
+                        <button class="idea-filter active" data-idea-filter="all">الكل <b id="ideaCountAll">0</b></button>
+                        <button class="idea-filter" data-idea-filter="raw">خام <b id="ideaCountRaw">0</b></button>
+                        <button class="idea-filter" data-idea-filter="developing">قيد التطوير <b id="ideaCountDeveloping">0</b></button>
+                        <button class="idea-filter" data-idea-filter="ready">جاهزة <b id="ideaCountReady">0</b></button>
+                        <button class="idea-filter" data-idea-filter="converted">محوّلة <b id="ideaCountConverted">0</b></button>
+                    </div>
+                </section>
+
+                <div id="ideasList" class="ideas-list"></div>
             </div>
 
 
@@ -673,6 +685,22 @@
                       rows="5"
                       placeholder="أضف بعض السياق..."></textarea>
         </label>
+
+        <div class="capture-extra-grid">
+            <label>
+                الوسوم
+                <input id="captureTags"
+                       type="text"
+                       placeholder="مثال: تاريخ، سياسة، فكرة">
+            </label>
+
+            <label>
+                المساحة
+                <input id="captureSpace"
+                       type="text"
+                       placeholder="مثال: مشروع، بحث، موضوع">
+            </label>
+        </div>
 
 
         <div class="modal-actions">
