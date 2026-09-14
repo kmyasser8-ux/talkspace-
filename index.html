@@ -489,16 +489,7 @@
                     <p>من الفكرة الأولى حتى النشر.</p>
                 </div>
 
-                <div class="empty-state">
-                    <div class="empty-icon">▤</div>
-                    <h2>لا توجد مقالات بعد</h2>
-                    <p>ابدأ بإنشاء فكرة أو مقال جديد.</p>
-                    <button class="primary-button"
-                            data-action="capture"
-                            data-type="article">
-                        ＋ مقال جديد
-                    </button>
-                </div>
+                <div id="articlesList" class="articles-list"></div>
             </div>
 
 
@@ -721,6 +712,115 @@
 
 </div>
 
+
+<!-- ================= ARTICLE STUDIO ================= -->
+<div class="modal-layer" id="articleStudioModal" aria-hidden="true">
+    <div class="modal article-studio-modal">
+        <div class="modal-header">
+            <div>
+                <span class="section-kicker">ARTICLE STUDIO</span>
+                <h2 id="articleStudioTitle">إنشاء مقال</h2>
+            </div>
+            <button class="close-button" data-action="close-article-studio" aria-label="إغلاق">×</button>
+        </div>
+
+        <div class="studio-tabs" role="tablist">
+            <button class="studio-tab active" data-article-tab="content">المحتوى</button>
+            <button class="studio-tab" data-article-tab="design">الهوية البصرية</button>
+            <button class="studio-tab" data-article-tab="preview">المعاينة</button>
+        </div>
+
+        <div class="article-studio-body">
+            <section class="article-tab-panel active" data-article-panel="content">
+                <div class="article-form-grid">
+                    <label class="full-span">عنوان المقال
+                        <input id="articleTitleInput" type="text" maxlength="180" placeholder="اكتب عنوانًا قويًا وواضحًا...">
+                    </label>
+                    <label class="full-span">المقدمة / الملخص
+                        <textarea id="articleIntroInput" rows="4" maxlength="600" placeholder="ما الذي سيحصل عليه القارئ من هذا المقال؟"></textarea>
+                    </label>
+                    <label>المساحة
+                        <input id="articleSpaceInput" type="text" placeholder="مثال: السياسة، مشروع، بحث">
+                    </label>
+                    <label>الوسوم
+                        <input id="articleTagsInput" type="text" placeholder="فكرة، تحليل، تاريخ">
+                    </label>
+                    <label>الحالة
+                        <select id="articleStatusInput">
+                            <option value="draft">مسودة</option>
+                            <option value="review">قيد المراجعة</option>
+                            <option value="published">منشور</option>
+                        </select>
+                    </label>
+                    <label>المصادر
+                        <input id="articleSourcesInput" type="text" placeholder="ضع الروابط مفصولة بفاصلة أو سطر جديد">
+                    </label>
+                    <label class="full-span">نص المقال
+                        <textarea id="articleContentInput" class="article-content-editor" rows="12" placeholder="ابدأ كتابة المقال هنا...\n\nيمكنك استخدام فقرات وعناوين بسيطة. التنسيق البصري سيظهر في المعاينة."></textarea>
+                    </label>
+                </div>
+                <div class="article-stats">
+                    <span>الكلمات: <b id="articleWordCount">0</b></span>
+                    <span>وقت القراءة: <b id="articleReadTime">أقل من دقيقة</b></span>
+                </div>
+            </section>
+
+            <section class="article-tab-panel" data-article-panel="design">
+                <div class="design-grid">
+                    <div class="design-card">
+                        <div class="design-card-head"><strong>صورة الغلاف</strong><span>اختيارية</span></div>
+                        <div class="upload-box" id="coverUploadBox">
+                            <div class="upload-preview" id="coverPreview"><span>▧</span><small>لا توجد صورة</small></div>
+                            <input id="articleCoverInput" type="file" accept="image/png,image/jpeg,image/webp">
+                            <label for="articleCoverInput" class="outline-button upload-label">اختيار صورة</label>
+                            <button class="text-button" data-action="remove-article-cover">إزالة الغلاف</button>
+                        </div>
+                        <div class="control-row"><label>موضع الصورة<select id="articleCoverPosition"><option value="center">وسط</option><option value="top">أعلى</option><option value="bottom">أسفل</option><option value="left">يسار</option><option value="right">يمين</option></select></label><label>التكبير<input id="articleCoverZoom" type="range" min="100" max="160" value="100"><small id="articleCoverZoomValue">100%</small></label></div>
+                    </div>
+
+                    <div class="design-card">
+                        <div class="design-card-head"><strong>رمز / شعار المقال</strong><span>اختياري</span></div>
+                        <div class="upload-box compact-upload">
+                            <div class="upload-preview logo-preview" id="logoPreview"><span>◎</span><small>رمز افتراضي</small></div>
+                            <input id="articleLogoInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+                            <label for="articleLogoInput" class="outline-button upload-label">رفع شعار</label>
+                            <button class="text-button" data-action="remove-article-logo">استخدام الرمز الافتراضي</button>
+                        </div>
+                        <label>رمز بديل<input id="articleSymbolInput" type="text" maxlength="4" placeholder="◎"></label>
+                    </div>
+
+                    <div class="design-card">
+                        <div class="design-card-head"><strong>الخط</strong><span>خاص بهذا المقال</span></div>
+                        <label>عائلة الخط<select id="articleFontFamily"><option value="Cairo">Cairo</option><option value="Tajawal">Tajawal</option><option value="Amiri">Amiri</option><option value="Arial">Arial</option><option value="system-ui">System UI</option></select></label>
+                        <div class="control-row"><label>حجم العنوان<input id="articleTitleSize" type="range" min="28" max="72" value="46"><small id="articleTitleSizeValue">46px</small></label><label>حجم النص<input id="articleBodySize" type="range" min="15" max="24" value="18"><small id="articleBodySizeValue">18px</small></label></div>
+                    </div>
+
+                    <div class="design-card">
+                        <div class="design-card-head"><strong>لون المقال</strong><span>يظهر في التفاصيل</span></div>
+                        <div class="color-pair"><label>اللون الأساسي<input id="articleAccentColor" type="color" value="#00f2fe"></label><output id="articleAccentValue">#00f2fe</output></div>
+                        <div class="cover-style-grid"><button class="cover-style active" data-cover-style="image">صورة</button><button class="cover-style" data-cover-style="gradient">تدرج</button><button class="cover-style" data-cover-style="image-gradient">صورة + تدرج</button><button class="cover-style" data-cover-style="none">بدون</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="article-tab-panel" data-article-panel="preview">
+                <div class="preview-switcher"><button class="preview-mode active" data-preview-mode="article">مقال</button><button class="preview-mode" data-preview-mode="card">بطاقة</button><button class="preview-mode" data-preview-mode="mobile">هاتف</button></div>
+                <div class="article-live-preview-shell" id="articlePreviewShell">
+                    <article class="article-live-preview" id="articlePreview">
+                        <div class="preview-cover" id="previewCover"><div class="preview-logo" id="previewLogo">◎</div></div>
+                        <div class="preview-inner"><span class="preview-space" id="previewSpace">TALKSPACE</span><h1 id="previewTitle">عنوان المقال</h1><p class="preview-intro" id="previewIntro">ستظهر المقدمة هنا.</p><div class="preview-meta"><span id="previewStatus">مسودة</span><span id="previewReadTime">أقل من دقيقة</span></div><div class="preview-content" id="previewContent">اكتب محتوى المقال لتظهر المعاينة.</div></div>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <div class="modal-actions article-studio-actions">
+            <button class="secondary-button" data-action="close-article-studio">إلغاء</button>
+            <button class="secondary-button" data-action="preview-article">معاينة</button>
+            <button class="primary-button" data-action="save-article">حفظ المقال</button>
+        </div>
+    </div>
+</div>
 
 <!-- ================= NOTIFICATIONS ================= -->
 
